@@ -434,7 +434,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItemVerTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerTiendasActionPerformed
         // TODO add your handling code here:
         ConectarDB conectarDB = new ConectarDB();
-        conectarDB.selectAll();
+        System.out.println(conectarDB.inicializarDB());
     }//GEN-LAST:event_jMenuItemVerTiendasActionPerformed
 
     

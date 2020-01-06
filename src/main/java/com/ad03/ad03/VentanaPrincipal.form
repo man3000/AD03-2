@@ -151,7 +151,6 @@
               </Border>
             </Property>
             <Property name="text" type="java.lang.String" value="Titulares RSS"/>
-            <Property name="borderPainted" type="boolean" value="true"/>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
