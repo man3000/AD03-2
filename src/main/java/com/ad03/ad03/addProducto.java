@@ -3,7 +3,13 @@
  */
 package com.ad03.ad03;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 /**
  *
@@ -11,6 +17,9 @@ import javax.swing.*;
  */
 public class addProducto extends javax.swing.JDialog {
 
+    
+    private HashMap<String,Integer> tiendasMap = new HashMap<>();
+    
     /**
      * Creates new form addProducto
      * @param parent
@@ -36,7 +45,7 @@ public class addProducto extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        id = new javax.swing.JTextField();
+        nombre_producto = new javax.swing.JTextField();
         precio = new javax.swing.JTextField();
         cantidad = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -60,13 +69,19 @@ public class addProducto extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("ID:");
+        jLabel2.setText("Nombre:");
 
         jLabel3.setText("Precio:");
 
         jLabel4.setText("Cantidad:");
 
         jLabel5.setText("Descripción:");
+
+        nombre_producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombre_productoActionPerformed(evt);
+            }
+        });
 
         descripcion.setColumns(20);
         descripcion.setRows(5);
@@ -110,7 +125,7 @@ public class addProducto extends javax.swing.JDialog {
                                 .addComponent(jLabel4))
                             .addGap(38, 38, 38)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(id)
+                                .addComponent(nombre_producto)
                                 .addComponent(precio)
                                 .addComponent(jComboBox1, 0, 243, Short.MAX_VALUE)
                                 .addComponent(cantidad)))))
@@ -126,7 +141,7 @@ public class addProducto extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombre_producto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -157,10 +172,10 @@ public class addProducto extends javax.swing.JDialog {
 
     private void jButton_addProductoOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addProductoOKActionPerformed
         // TODO add your handling code here:
-        int i = this.jComboBox1.getSelectedIndex();
+        String i = (String)this.jComboBox1.getSelectedItem();
         
         
-        if (this.id.getText().equals("") || 
+        if (this.nombre_producto.getText().equals("") || 
                 this.precio.getText().equals("")  || 
                 this.cantidad.getText().equals("") || 
                 this.descripcion.getText().equals("")){
@@ -168,12 +183,18 @@ public class addProducto extends javax.swing.JDialog {
         } else {
         
             try {
-                Producto p = new Producto(this.id.getText(),this.descripcion.getText(),this.precio.getText(),this.cantidad.getText());
-                VentanaPrincipal.Empresa.Tiendas.get(i).addProducto(p);
-                VentanaPrincipal.actualizarJson();
+                Producto p = new Producto(this.nombre_producto.getText(),this.descripcion.getText(),this.precio.getText(),this.cantidad.getText());
+                
+                String nom = this.nombre_producto.getText();
+                String desc = this.descripcion.getText();
+                Float prec = Float.parseFloat(this.precio.getText());
+                int can = Integer.parseInt(this.cantidad.getText());
+                int idTien = this.tiendasMap.get(i);
+                VentanaPrincipal.insertarProducto(nom, desc, prec, idTien, can);
+                
                 this.dispose();
-            } catch (ErrorNumero ex) {
-                JOptionPane.showMessageDialog(this, "El precio y/o la cantidad no están en el formato correcto", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (ErrorNumero | NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "El ID, precio y/o la cantidad no están en el formato correcto", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jButton_addProductoOKActionPerformed
@@ -187,6 +208,10 @@ public class addProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton_addProductoCancelarActionPerformed
+
+    private void nombre_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombre_productoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombre_productoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,10 +262,25 @@ public class addProducto extends javax.swing.JDialog {
      * Con este método establecemos los elementos que se muestran en el desplegable
      */
     public void fijarModelo(){
+       String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
+
         ArrayList<String> cadena = new ArrayList<>();
-        for (Tienda t : VentanaPrincipal.Empresa.Tiendas){
-            cadena.add(t.getNombre() + " - " + t.getCiudad());
+
+        Connection con = VentanaPrincipal.connectDatabase();
+        
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                this.tiendasMap.put(rs.getString("nombre")+ " - " + rs.getString("ciudad"), rs.getInt("idTienda"));
+                cadena.add(rs.getString("nombre")+ " - " + rs.getString("ciudad"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
         }
+    
+        
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBox1.setModel(model);
     }
@@ -248,7 +288,6 @@ public class addProducto extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cantidad;
     private javax.swing.JTextArea descripcion;
-    private javax.swing.JTextField id;
     private javax.swing.JButton jButton_addProductoCancelar;
     private javax.swing.JButton jButton_addProductoOK;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -258,6 +297,7 @@ public class addProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nombre_producto;
     private javax.swing.JTextField precio;
     // End of variables declaration//GEN-END:variables
 }
