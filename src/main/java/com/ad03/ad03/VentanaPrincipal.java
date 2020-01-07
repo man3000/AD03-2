@@ -23,6 +23,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.spi.DirStateFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
@@ -328,14 +330,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        if (hayTiendas()) {
-            addProducto addproducto = new addProducto(this, true);
-            addproducto.fijarModelo();
-            addproducto.setLocation(this.getLocation());
-            addproducto.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "No existen tiendas");
-        }
+
+        addProducto addproducto = new addProducto(this, true);
+        addproducto.fijarModelo();
+        addproducto.setLocation(this.getLocation());
+        addproducto.setVisible(true);
 
 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
@@ -373,14 +372,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
-        if (hayTiendas()) {
+        
             addEmpleado addempleado = new addEmpleado(this, true);
             addempleado.fijarModelo();
             addempleado.setLocation(this.getLocation());
             addempleado.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "No existen tiendas");
-        }
+        
 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
@@ -775,10 +772,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         }
     }
-    
+
     static void insertarCliente(String nom, String apel, String mail) {
         Connection con = connectDatabase();
-        
+
         String sql = "INSERT INTO Clientes(nombre,apellidos,email) VALUES(?,?,?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -793,29 +790,113 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 System.out.println(e.getMessage());
             }
         }
-        
+
         desconnetDatabase(con);
     }
-    
-    static void insertarTienda(String nom, String ciud, String idProvincia) {
+
+    static int insertarTienda(String nom, String ciud, String idProvincia) {
         Connection con = connectDatabase();
-        
+        int idInsertado = 0;
         String sql = "INSERT INTO Tiendas(nombre,ciudad,Provincias_idProvincia) VALUES(?,?,?)";
 
-        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, nom);
             pstmt.setString(2, ciud);
             pstmt.setString(3, idProvincia);
+
             pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+
+            idInsertado = (int) rs.getLong(1);
+
         } catch (SQLException e) {
             if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
                 System.out.println("El registro ya esiste");
+
             } else {
                 System.out.println(e.getMessage());
             }
         }
-        
+
         desconnetDatabase(con);
+        return idInsertado;
+    }
+
+    static int insertarProducto(String nom, String desc, Float prec, int idTien, int can) {
+
+        Connection con = connectDatabase();
+        int idInsertado = 0;
+        String sql = "INSERT INTO Productos(nombre,descripcion,precio) VALUES(?,?,?)";
+        String sqlTablaUnion = "INSERT INTO Tiendas_Productos(Tiendas_idTienda,Productos_idProducto,stock) VALUES(?,?,?)";
+
+        try {
+
+            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmtUnion = con.prepareStatement(sqlTablaUnion);
+
+            pstmt.setString(1, nom);
+            pstmt.setString(2, desc);
+            System.out.println(prec);
+            pstmt.setFloat(3, prec);
+
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            idInsertado = (int) rs.getLong(1);
+            
+            pstmtUnion.setInt(1, idTien);
+            pstmtUnion.setInt(2, idInsertado);
+            pstmtUnion.setInt(3, can);
+            pstmtUnion.executeUpdate();
+            
+
+        } catch (SQLException e) {
+            if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
+                System.out.println("El registro ya esiste");
+
+            } else {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        desconnetDatabase(con);
+        return idInsertado;
+    }
+    
+    static int insertarEmpleado(String nom, String apel, int horas, int idTien) {
+        Connection con = connectDatabase();
+        int idInsertado = 0;
+        String sql = "INSERT INTO Empleados(nombre,apellidos) VALUES(?,?)";
+        String sqlTablaUnion = "INSERT INTO Tiendas_Empleados(Tiendas_idTienda,Empleados_idEmpleado,horas_semanales) VALUES(?,?,?)";
+
+        try {
+
+            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmtUnion = con.prepareStatement(sqlTablaUnion);
+
+            pstmt.setString(1, nom);
+            pstmt.setString(2, apel);
+
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            idInsertado = (int) rs.getLong(1);
+            
+            pstmtUnion.setInt(1, idTien);
+            pstmtUnion.setInt(2, idInsertado);
+            pstmtUnion.setInt(3, horas);
+            pstmtUnion.executeUpdate();
+            
+
+        } catch (SQLException e) {
+            if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
+                System.out.println("El registro ya esiste");
+
+            } else {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        desconnetDatabase(con);
+        return idInsertado;
     }
 
     private void rellenarProvincias(Connection con) {
