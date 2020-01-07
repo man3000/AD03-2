@@ -135,6 +135,12 @@ public class addCliente extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Se deben rellenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
             
         } else {
+            String nom = this.nombre.getText();
+            String apel = this.apellidos.getText();
+            String mail = this.email.getText();
+            
+            VentanaPrincipal.insertarCliente(nom,apel,mail);
+            
             Cliente c = new Cliente(this.nombre.getText(),this.apellidos.getText(), this.email.getText());
             VentanaPrincipal.Empresa.Clientes.add(c);
             VentanaPrincipal.actualizarJson();

@@ -22,9 +22,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -40,30 +43,54 @@ import org.xml.sax.SAXException;
  * @author Manuel Alejandro Álvarez Pérez
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-    
+
     //Variables estáticas
-    
     static Empresa Empresa = new Empresa();
+
+    static Provincias provincias = new Provincias();
+
     static ArrayList<Tienda> Tiendas = new ArrayList<>();
     static ArrayList<Cliente> Clientes = new ArrayList<>();
     static String nombre, ciudad;
     static Gson gson = new Gson();
     static String json;
-    static final File dataJson= new File("data.json");
+
     static ArrayList<String> titularesRSS = new ArrayList<>();
+
+    static String comprobarTablas = "SELECT * FROM SQLITE_MASTER WHERE NAME=TBL_NAME";
+
+    static final String[] entidades = {"Clientes", "Empleados", "Productos", "Provincias", "Tiendas", "Tiendas_Empleados", "Tiendas_Productos"};
+
+    static String dir = System.getProperty("user.dir");
+    static String sep = File.separator;
+    static String nombre_db = "database.db";
+    static String ruta_db = dir + sep + "src" + sep + "main" + sep + "java" + sep + "com" + sep + "ad03" + sep + "db" + sep + nombre_db;
+    static String url_db = "jdbc:sqlite:" + ruta_db;
+    static File archivo_db = new File(ruta_db);
+    static final File dataJson = new File(dir + sep + "src" + sep + "main" + sep + "java" + sep + "com" + sep + "ad03" + sep + "db" + sep + "provincias.json");
+
     
+
     /**
-     * Constructor principal que posiciona la ventana en el centro de la pantalla
-     * 
+     * Constructor principal que posiciona la ventana en el centro de la
+     * pantalla
+     *
      */
     public VentanaPrincipal() {
         initComponents();
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = d.width/2;
-        int y = d.height/2;
+        int x = d.width / 2;
+        int y = d.height / 2;
         this.setLocation(x - this.getWidth() / 2, y - this.getHeight() / 2);
-        
+        System.out.println(dataJson.getAbsolutePath());
         validarArchivoJson(dataJson);
+
+        Connection con = connectDatabase();
+        crearTablas(con);
+        rellenarProvincias(con);
+
+        desconnetDatabase(con);
+
     }
 
     /**
@@ -277,7 +304,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-        if (hayTiendas()){
+        if (hayTiendas()) {
             removeProducto removeproducto = new removeProducto(this, true);
             removeproducto.setLocation(this.getLocation());
             removeproducto.fijarModelo();
@@ -286,21 +313,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No existen tiendas");
         }
-        
+
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
         addTienda addtienda = new addTienda(this, true);
+        addtienda.fijarModelo();
         addtienda.setLocation(this.getLocation());
         addtienda.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        if (hayTiendas()){
+        if (hayTiendas()) {
             addProducto addproducto = new addProducto(this, true);
             addproducto.fijarModelo();
             addproducto.setLocation(this.getLocation());
@@ -308,7 +336,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No existen tiendas");
         }
-        
+
 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -319,32 +347,33 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             DataInputStream input = new DataInputStream(new FileInputStream(dataJson));
             DataOutputStream output = new DataOutputStream(new FileOutputStream(file));
             int i;
-            while((i = input.read()) != -1){
+            while ((i = input.read()) != -1) {
                 output.write(i);
             }
             input.close();
             output.close();
             JOptionPane.showMessageDialog(this, "Copia de seguridad creada con éxito");
-            
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_copiaSeguridadActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
         // TODO add your handling code here:
         int option = JOptionPane.showConfirmDialog(this, "¿Confirma que desea salir de la aplicación? ", "Confirmación", JOptionPane.YES_NO_OPTION);
-        if (option == JOptionPane.YES_OPTION)
+        if (option == JOptionPane.YES_OPTION) {
             System.exit(0);
-        
+        }
+
     }//GEN-LAST:event_salirActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
-        if (hayTiendas()){
+        if (hayTiendas()) {
             addEmpleado addempleado = new addEmpleado(this, true);
             addempleado.fijarModelo();
             addempleado.setLocation(this.getLocation());
@@ -352,7 +381,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No existen tiendas");
         }
-        
+
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -366,7 +395,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
         int returnVal = chooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION){
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             validarArchivoJson(chooser.getSelectedFile());
             actualizarJson();
         }
@@ -374,7 +403,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        if (hayTiendas()){
+        if (hayTiendas()) {
             removeTienda removetienda = new removeTienda(this, true);
             removetienda.fijarModelo();
             removetienda.setLocation(this.getLocation());
@@ -386,7 +415,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
-        if (hayTiendas()){
+        if (hayTiendas()) {
             removeEmpleado removeempleado = new removeEmpleado(this, true);
             removeempleado.fijarModelo();
             removeempleado.fijarModeloEmpleado();
@@ -395,12 +424,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No existen tiendas");
         }
-        
+
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
-        if (!Empresa.Clientes.isEmpty()){
+        if (!Empresa.Clientes.isEmpty()) {
             removeCliente removecliente = new removeCliente(this, true);
             removecliente.setLocation(this.getLocation());
             removecliente.fijarModelo();
@@ -412,7 +441,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jMenu6ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
@@ -428,49 +457,48 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         Datos datos = new Datos(this, true);
         datos.setLocation(this.getLocation());
         datos.setVisible(true);
-        
+
     }//GEN-LAST:event_jMenuItemVerDatosActionPerformed
 
     private void jMenuItemVerTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerTiendasActionPerformed
         // TODO add your handling code here:
-        ConectarDB conectarDB = new ConectarDB();
-        System.out.println(conectarDB.inicializarDB());
+
+
     }//GEN-LAST:event_jMenuItemVerTiendasActionPerformed
 
-    
     /**
-     * Con este método analizamos el archivo "data.json" y comprobamos que el archivo 
-     * sea un archivo json válido para nuestra aplicación
+     * Con este método analizamos el archivo "data.json" y comprobamos que el
+     * archivo sea un archivo json válido para nuestra aplicación
      */
-    private void validarArchivoJson(File f){
+    private void validarArchivoJson(File f) {
         File file = f;
-        if (file.exists()){
+        if (file.exists()) {
             try {
-                
+
                 BufferedReader input = new BufferedReader(new FileReader(file));
 
                 StringBuilder injson = new StringBuilder("");
+
                 String s;
-                while((s = input.readLine()) != null){
+                while ((s = input.readLine()) != null) {
                     injson.append(s);
-                    
                 }
-                
-                VentanaPrincipal.Empresa = gson.fromJson(injson.toString(), Empresa.class);
-                
-                if (Objects.isNull(VentanaPrincipal.Empresa)){
-                    VentanaPrincipal.Empresa = new Empresa();
+                VentanaPrincipal.provincias = gson.fromJson(injson.toString(), Provincias.class);
+
+                if (Objects.isNull(VentanaPrincipal.provincias)) {
+                    VentanaPrincipal.provincias = new Provincias();
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 System.out.println(e.getMessage());
-            } catch (JsonSyntaxException e){
-                
+            } catch (JsonSyntaxException e) {
+
+                /*
                 int option;
-                
-                if (f.equals(dataJson)){
+
+                if (f.equals(dataJson)) {
                     option = JOptionPane.showConfirmDialog(this, "El archivo json.data no es válido ¿desea borarlo y crear uno vacío?", "Error archivo", JOptionPane.YES_NO_OPTION);
-                    
-                    if (option == JOptionPane.YES_OPTION){
+
+                    if (option == JOptionPane.YES_OPTION) {
                         file.delete();
                         File file2 = new File("data.json");
                         try {
@@ -481,24 +509,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     } else {
                         System.exit(0);
                     }
-                }
-                else
+                } else {
                     JOptionPane.showMessageDialog(this, "El archivo seleccionado no es válido ", "Error archivo", JOptionPane.OK_OPTION);
-                    
-                
+                }
+                 */
+                System.out.println("Error al procesar el archivo provincias.json");
             }
         } else {
-            JOptionPane.showConfirmDialog(this, "No se encuentra el archivo data.json por lo que se creará uno vacío");
+            JOptionPane.showConfirmDialog(this, "No se encuentra el archivo provincias.json por lo que se creará uno vacío");
         }
     }
-    
+
     /**
      * Con este método actualizamos el archivo de trabajo "data.json"
      */
-    public static void actualizarJson(){
-        
+    public static void actualizarJson() {
+
         json = gson.toJson(Empresa);
-        
+
         try {
             FileWriter escritura = new FileWriter(dataJson);
             escritura.write(json);
@@ -506,20 +534,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } catch (IOException ex) {
             System.out.println("Error en la ruta");
         }
-        
+
     }
-    
+
     /**
      * Comprobamos si exixten tiendas en la empresa
-     */    
-    private boolean hayTiendas(){
-        if (Empresa.Tiendas.isEmpty())
-                return false;
-        else return true;
+     */
+    private boolean hayTiendas() {
+        if (Empresa.Tiendas.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
-    
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -548,41 +576,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        
-        
-        
-        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VentanaPrincipal().setVisible(true);
             }
         });
-        
+
         try {
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-            
+
             URL url = new URL("http://ep00.epimg.net/rss/elpais/portada.xml");
-            
+
             InputStream stream = url.openStream();
-            
+
             SAXParser saxParser = saxParserFactory.newSAXParser();
-            
+
             Handler handler = new Handler();
-            
+
             saxParser.parse(new InputSource(stream), handler);
-            
+
             titularesRSS = handler.getTitulares();
-            
+
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             titularesRSS.add("Error en el XML o no existe conexión a Internet");
         }
-        
-        
+
     }
-    
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu archivoMenu;
@@ -608,4 +629,200 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemVerTiendas;
     private javax.swing.JMenuItem salir;
     // End of variables declaration//GEN-END:variables
+
+    public static Connection connectDatabase() {
+        Connection connection = null;
+        try {
+            //Creamos a conexión a base de datos
+            connection = DriverManager.getConnection(url_db);
+            System.out.println("Conexión realizada con éxito");
+            return connection;
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    /*
+    Este método desconectase dunha base de datos en SQLLite a que se lle pasa a conexión
+     */
+    private static void desconnetDatabase(Connection connection) {
+        try {
+            if (connection != null) {
+                connection.close();
+                System.out.println("Desconexión realizada con éxito");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /*
+    Método que crea a tabla persona nunha base de datos persoa  
+     */
+    private static void crearTablas(Connection con) {
+        try {
+            String sql = "CREATE TABLE IF NOT EXISTS Provincias (\n"
+                    + "  idProvincia INT NOT NULL,\n"
+                    + "  nombre VARCHAR(45) NULL,\n"
+                    + "  PRIMARY KEY (idProvincia));";
+
+            Statement stmt = con.createStatement();
+            stmt.execute(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS Tiendas (\n"
+                    + "  idTienda INT NOT NULL,\n"
+                    + "  nombre VARCHAR(45) NULL,\n"
+                    + "  ciudad VARCHAR(45) NULL,\n"
+                    + "  Provincias_idProvincia INT NOT NULL,\n"
+                    + "  PRIMARY KEY (idTienda),\n"
+                    + "  CONSTRAINT fk_Tiendas_Provincias\n"
+                    + "    FOREIGN KEY (Provincias_idProvincia)\n"
+                    + "    REFERENCES Provincias (idProvincia)\n"
+                    + "    ON DELETE CASCADE\n"
+                    + "    ON UPDATE CASCADE);";
+
+            stmt = con.createStatement();
+            stmt.execute(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS Productos (\n"
+                    + "  idProducto INT NOT NULL,\n"
+                    + "  nombre VARCHAR(45) NULL,\n"
+                    + "  descripcion VARCHAR(45) NULL,\n"
+                    + "  precio DECIMAL NULL DEFAULT 0,\n"
+                    + "  PRIMARY KEY (idProducto));";
+
+            stmt = con.createStatement();
+            stmt.execute(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS Empleados (\n"
+                    + "  idEmpleado INT NOT NULL,\n"
+                    + "  nombre VARCHAR(45) NULL,\n"
+                    + "  apellidos VARCHAR(45) NULL,\n"
+                    + "  PRIMARY KEY (idEmpleado));";
+
+            stmt = con.createStatement();
+            stmt.execute(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS Clientes (\n"
+                    + "  idCliente INT NOT NULL,\n"
+                    + "  nombre VARCHAR(45) NULL,\n"
+                    + "  apellidos VARCHAR(45) NULL,\n"
+                    + "  email VARCHAR(45) NULL,\n"
+                    + "  PRIMARY KEY (idCliente));";
+
+            stmt = con.createStatement();
+            stmt.execute(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS Tiendas_Productos (\n"
+                    + "  Tiendas_idTienda INT NOT NULL,\n"
+                    + "  Productos_idProducto INT NOT NULL,\n"
+                    + "  stock INT NULL,\n"
+                    + "  PRIMARY KEY (Tiendas_idTienda, Productos_idProducto),\n"
+                    + "  CONSTRAINT fk_TIENDAS_has_PRODUCTOS_TIENDAS\n"
+                    + "    FOREIGN KEY (Tiendas_idTienda)\n"
+                    + "    REFERENCES Tiendas (idTienda)\n"
+                    + "    ON DELETE CASCADE\n"
+                    + "    ON UPDATE CASCADE,\n"
+                    + "  CONSTRAINT fk_TIENDAS_has_PRODUCTOS_PRODUCTOS1\n"
+                    + "    FOREIGN KEY (Productos_idProducto)\n"
+                    + "    REFERENCES Productos (idProducto)\n"
+                    + "    ON DELETE CASCADE\n"
+                    + "    ON UPDATE CASCADE);";
+
+            stmt = con.createStatement();
+            stmt.execute(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS Tiendas_Empleados (\n"
+                    + "  Tiendas_idTienda INT NOT NULL,\n"
+                    + "  Empleados_idEmpleado INT NOT NULL,\n"
+                    + "  horas_semanales INT NULL,\n"
+                    + "  PRIMARY KEY (Tiendas_idTienda, Empleados_idEmpleado),\n"
+                    + "  CONSTRAINT fk_TIENDAS_has_EMPLEADOS_TIENDAS1\n"
+                    + "    FOREIGN KEY (Tiendas_idTienda)\n"
+                    + "    REFERENCES Tiendas (idTienda)\n"
+                    + "    ON DELETE CASCADE\n"
+                    + "    ON UPDATE CASCADE,\n"
+                    + "  CONSTRAINT fk_TIENDAS_has_EMPLEADOS_EMPLEADOS1\n"
+                    + "    FOREIGN KEY (Empleados_idEmpleado)\n"
+                    + "    REFERENCES Empleados (idEmpleado)\n"
+                    + "    ON DELETE CASCADE\n"
+                    + "    ON UPDATE CASCADE);";
+
+            stmt = con.createStatement();
+            stmt.execute(sql);
+
+            System.out.println("Táboa persona creada con éxito");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    private void insertarProvincia(Connection con, int idProvincia, String nombre) {
+        String sql = "INSERT INTO Provincias(idProvincia,nombre) VALUES(?,?)";
+
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, idProvincia);
+            pstmt.setString(2, nombre);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
+                System.out.println("El registro ya esiste");
+            } else {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
+    static void insertarCliente(String nom, String apel, String mail) {
+        Connection con = connectDatabase();
+        
+        String sql = "INSERT INTO Clientes(nombre,apellidos,email) VALUES(?,?,?)";
+
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, nom);
+            pstmt.setString(2, apel);
+            pstmt.setString(3, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
+                System.out.println("El registro ya esiste");
+            } else {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        desconnetDatabase(con);
+    }
+    
+    static void insertarTienda(String nom, String ciud, String idProvincia) {
+        Connection con = connectDatabase();
+        
+        String sql = "INSERT INTO Tiendas(nombre,ciudad,Provincias_idProvincia) VALUES(?,?,?)";
+
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, nom);
+            pstmt.setString(2, ciud);
+            pstmt.setString(3, idProvincia);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
+                System.out.println("El registro ya esiste");
+            } else {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        desconnetDatabase(con);
+    }
+
+    private void rellenarProvincias(Connection con) {
+
+        for (Provincia prov : provincias.getProvincias()) {
+            insertarProvincia(con, Integer.parseInt(prov.getId()), prov.getNome());
+        }
+
+    }
 }
