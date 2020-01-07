@@ -3,7 +3,14 @@
  */
 package com.ad03.ad03;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -12,6 +19,8 @@ import javax.swing.JOptionPane;
  * @author Manuel
  */
 public class removeCliente extends javax.swing.JDialog {
+    
+    HashMap<String,Integer> clientesMap = new HashMap<>();
 
     /**
      * Creates new form removeTienda
@@ -33,7 +42,7 @@ public class removeCliente extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxEliminarCliente = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -69,7 +78,7 @@ public class removeCliente extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(26, 26, 26)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboBoxEliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
@@ -78,7 +87,7 @@ public class removeCliente extends javax.swing.JDialog {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxEliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -91,12 +100,11 @@ public class removeCliente extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        int i = this.jComboBox1.getSelectedIndex();
-        
+        String i = (String) this.jComboBoxEliminarCliente.getSelectedItem();
+        int idClienteEliminar = this.clientesMap.get(i);
         
             if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                VentanaPrincipal.Empresa.Clientes.remove(i);
-                VentanaPrincipal.actualizarJson();
+                VentanaPrincipal.eliminarCliente(idClienteEliminar);
                 this.dispose();
             } 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -155,18 +163,32 @@ public class removeCliente extends javax.swing.JDialog {
      * Con este método establecemos los elementos que se muestran en el desplegable
      */
     public void fijarModelo(){
+        String sql = "SELECT * FROM Clientes ORDER BY nombre ASC";
+
         ArrayList<String> cadena = new ArrayList<>();
-        for (Cliente c : VentanaPrincipal.Empresa.Clientes){
-            cadena.add(c.getNombre() + " - " + c.getApellidos());
+
+        Connection con = VentanaPrincipal.connectDatabase();
+
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                this.clientesMap.put(rs.getString("nombre") + " " + rs.getString("apellidos"), rs.getInt("idCliente"));
+                cadena.add(rs.getString("nombre") + " " + rs.getString("apellidos"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
-        this.jComboBox1.setModel(model);
+        this.jComboBoxEliminarCliente.setModel(model);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxEliminarCliente;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

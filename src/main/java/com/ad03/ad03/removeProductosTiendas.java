@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * GUI para eliminar productos
  */
 package com.ad03.ad03;
 
@@ -20,15 +18,18 @@ import javax.swing.JOptionPane;
  *
  * @author Manuel
  */
-public class removeTienda extends javax.swing.JDialog {
+public class removeProductosTiendas extends javax.swing.JDialog {
 
-    HashMap<String,Integer> tiendasMap = new HashMap<>();
+    HashMap<String, Integer> tiendasMap = new HashMap<>();
+    HashMap<String, Integer> productosMap = new HashMap<>();
+
     /**
-     * Creates new form removeTienda
+     * Creates new form removeProducto
+     *
      * @param parent
      * @param modal
      */
-    public removeTienda(java.awt.Frame parent, boolean modal) {
+    public removeProductosTiendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -43,13 +44,29 @@ public class removeTienda extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxTiendas = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxProductos = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Seleccionar Tienda:");
+        jLabel1.setText("Seleccione Tienda:");
+
+        jComboBoxTiendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxTiendasActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Seleccione Producto:");
+
+        jComboBoxProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxProductosActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -77,19 +94,27 @@ public class removeTienda extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(26, 26, 26)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBoxTiendas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxProductos, 0, 220, Short.MAX_VALUE))))
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                    .addComponent(jComboBoxTiendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBoxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -99,22 +124,33 @@ public class removeTienda extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jComboBoxTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTiendasActionPerformed
         // TODO add your handling code here:
-                
-        String i = (String) this.jComboBox1.getSelectedItem();
-        
-            if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                VentanaPrincipal.eliminarTienda(tiendasMap.get(i));
-                this.dispose();
-            } 
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+        fijarModeloProductos();
+    }//GEN-LAST:event_jComboBoxTiendasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String tien = (String) this.jComboBoxTiendas.getSelectedItem();
+        String prod = (String) this.jComboBoxProductos.getSelectedItem();
+        int idTienda_eliminar = this.tiendasMap.get(tien);
+        int idProducto_eliminar = this.productosMap.get(prod);
+        
+        if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+            VentanaPrincipal.eliminarProductoTienda(idTienda_eliminar, idProducto_eliminar);
+            this.dispose();
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBoxProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProductosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxProductosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,21 +169,23 @@ public class removeTienda extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(removeTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(removeProductosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(removeTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(removeProductosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(removeTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(removeProductosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(removeTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(removeProductosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                removeTienda dialog = new removeTienda(new javax.swing.JFrame(), true);
+                removeProductosTiendas dialog = new removeProductosTiendas(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -158,17 +196,18 @@ public class removeTienda extends javax.swing.JDialog {
             }
         });
     }
-    
+
     /**
-     * Con este método establecemos los elementos que se muestran en el desplegable
+     * Con este método establecemos los elementos que se muestran en el
+     * desplegable
      */
-    public void fijarModelo() {
+    public void fijarModeloTiendas() {
         String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
 
         Connection con = VentanaPrincipal.connectDatabase();
-        
+
         try {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -180,16 +219,50 @@ public class removeTienda extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-        
+
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
-        this.jComboBox1.setModel(model);
-    } 
+        this.jComboBoxTiendas.setModel(model);
+    }
+
+    /**
+     * Con este método establecemos los elementos que se muestran en el
+     * desplegable
+     */
+    public void fijarModeloProductos() {
+
+        String i = (String) this.jComboBoxTiendas.getSelectedItem();
+        int idTienda = this.tiendasMap.get(i);
+
+        String sql = "SELECT * FROM Productos WHERE idProducto IN (SELECT Productos_idProducto FROM Tiendas_Productos WHERE Tiendas_idTienda = ("
+                + idTienda + "))ORDER BY nombre ASC";
+
+        ArrayList<String> cadena = new ArrayList<>();
+
+        Connection con = VentanaPrincipal.connectDatabase();
+
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                this.productosMap.put(rs.getString("nombre"), rs.getInt("idProducto"));
+                cadena.add(rs.getString("nombre"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
+        this.jComboBoxProductos.setModel(model);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxProductos;
+    private javax.swing.JComboBox<String> jComboBoxTiendas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
