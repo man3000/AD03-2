@@ -141,9 +141,7 @@ public class addCliente extends javax.swing.JDialog {
             
             VentanaPrincipal.insertarCliente(nom,apel,mail);
             
-            Cliente c = new Cliente(this.nombre.getText(),this.apellidos.getText(), this.email.getText());
-            VentanaPrincipal.Empresa.Clientes.add(c);
-            VentanaPrincipal.actualizarJson();
+           
             this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed

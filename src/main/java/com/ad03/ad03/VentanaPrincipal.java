@@ -105,26 +105,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        archivoMenu = new javax.swing.JMenu();
+        archivoMenuImportar = new javax.swing.JMenu();
         importar = new javax.swing.JMenuItem();
         copiaSeguridad = new javax.swing.JMenuItem();
-        jMenuItemVerDatos = new javax.swing.JMenuItem();
         salir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItemAnadirTienda = new javax.swing.JMenuItem();
         jMenuItem_EliminarTienda = new javax.swing.JMenuItem();
-        jMenuItemVerTiendas = new javax.swing.JMenuItem();
+        jMenuItemMostrarTiendas = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemAnadirProducto = new javax.swing.JMenuItem();
+        jMenuItemModificarStockProducto = new javax.swing.JMenuItem();
+        jMenuItemMostrarProductos = new javax.swing.JMenuItem();
+        jMenuItemMostrarProductosTienda = new javax.swing.JMenuItem();
+        jMenuItemEliminarProducto = new javax.swing.JMenuItem();
         jMenuItem_EliminarProductoTiendas = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItemAnadirEmpleado = new javax.swing.JMenuItem();
+        jMenuItemEliminarEmpleado = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItemAnadirCliente = new javax.swing.JMenuItem();
+        jMenuItemMostrarCliente = new javax.swing.JMenuItem();
+        jMenuItemEliminarCliente = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
 
@@ -138,7 +140,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel1.setText("Gestión");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 255, 153), null));
 
-        archivoMenu.setText("Archivo");
+        archivoMenuImportar.setText("Archivo");
 
         importar.setText("Importar");
         importar.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +148,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 importarActionPerformed(evt);
             }
         });
-        archivoMenu.add(importar);
+        archivoMenuImportar.add(importar);
 
         copiaSeguridad.setText("Crear copia de seguridad");
         copiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
@@ -154,15 +156,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 copiaSeguridadActionPerformed(evt);
             }
         });
-        archivoMenu.add(copiaSeguridad);
-
-        jMenuItemVerDatos.setText("Visualizar los datos");
-        jMenuItemVerDatos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemVerDatosActionPerformed(evt);
-            }
-        });
-        archivoMenu.add(jMenuItemVerDatos);
+        archivoMenuImportar.add(copiaSeguridad);
 
         salir.setText("Salir");
         salir.addActionListener(new java.awt.event.ActionListener() {
@@ -170,19 +164,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 salirActionPerformed(evt);
             }
         });
-        archivoMenu.add(salir);
+        archivoMenuImportar.add(salir);
 
-        jMenuBar1.add(archivoMenu);
+        jMenuBar1.add(archivoMenuImportar);
 
         jMenu2.setText("Tienda");
 
-        jMenuItem3.setText("Añadir");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemAnadirTienda.setText("Añadir Tienda");
+        jMenuItemAnadirTienda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMenuItemAnadirTiendaActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        jMenu2.add(jMenuItemAnadirTienda);
 
         jMenuItem_EliminarTienda.setText("Eliminar Tienda");
         jMenuItem_EliminarTienda.addActionListener(new java.awt.event.ActionListener() {
@@ -192,41 +186,57 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem_EliminarTienda);
 
-        jMenuItemVerTiendas.setText("Ver Tiendas");
-        jMenuItemVerTiendas.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemMostrarTiendas.setText("Mostrar Tiendas");
+        jMenuItemMostrarTiendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemVerTiendasActionPerformed(evt);
+                jMenuItemMostrarTiendasActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItemVerTiendas);
+        jMenu2.add(jMenuItemMostrarTiendas);
 
         jMenuBar1.add(jMenu2);
 
         jMenu5.setText("Producto");
 
-        jMenuItem5.setText("Añadir Producto");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemAnadirProducto.setText("Añadir Producto");
+        jMenuItemAnadirProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                jMenuItemAnadirProductoActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem5);
+        jMenu5.add(jMenuItemAnadirProducto);
 
-        jMenuItem2.setText("Modificar Stock Producto");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemModificarStockProducto.setText("Modificar Stock Producto");
+        jMenuItemModificarStockProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenuItemModificarStockProductoActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem2);
+        jMenu5.add(jMenuItemModificarStockProducto);
 
-        jMenuItem1.setText("Eliminar Producto");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemMostrarProductos.setText("Mostrar Productos");
+        jMenuItemMostrarProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemMostrarProductosActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem1);
+        jMenu5.add(jMenuItemMostrarProductos);
+
+        jMenuItemMostrarProductosTienda.setText("Mostrar Productos de una Tienda");
+        jMenuItemMostrarProductosTienda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMostrarProductosTiendaActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItemMostrarProductosTienda);
+
+        jMenuItemEliminarProducto.setText("Eliminar Producto");
+        jMenuItemEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEliminarProductoActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItemEliminarProducto);
 
         jMenuItem_EliminarProductoTiendas.setText("Eliminar Productos de Tiendas");
         jMenuItem_EliminarProductoTiendas.addActionListener(new java.awt.event.ActionListener() {
@@ -240,41 +250,44 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenu3.setText("Empleado");
 
-        jMenuItem7.setText("Añadir");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemAnadirEmpleado.setText("Añadir Empleado");
+        jMenuItemAnadirEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                jMenuItemAnadirEmpleadoActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem7);
+        jMenu3.add(jMenuItemAnadirEmpleado);
 
-        jMenuItem8.setText("Eliminar");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemEliminarEmpleado.setText("Eliminar Empleado");
+        jMenuItemEliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                jMenuItemEliminarEmpleadoActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem8);
+        jMenu3.add(jMenuItemEliminarEmpleado);
 
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Cliente      ");
 
-        jMenuItem9.setText("Añadir");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemAnadirCliente.setText("Añadir Cliente");
+        jMenuItemAnadirCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                jMenuItemAnadirClienteActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem9);
+        jMenu4.add(jMenuItemAnadirCliente);
 
-        jMenuItem10.setText("Eliminar");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemMostrarCliente.setText("Mostrar Cliente");
+        jMenu4.add(jMenuItemMostrarCliente);
+
+        jMenuItemEliminarCliente.setText("Eliminar Cliente");
+        jMenuItemEliminarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                jMenuItemEliminarClienteActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem10);
+        jMenu4.add(jMenuItemEliminarCliente);
 
         jMenuBar1.add(jMenu4);
 
@@ -332,7 +345,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem_EliminarProductoTiendasActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jMenuItemAnadirTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirTiendaActionPerformed
         // TODO add your handling code here:
         addTienda addtienda = new addTienda(this, true);
         addtienda.fijarModelo();
@@ -340,9 +353,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         addtienda.setVisible(true);
 
 
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jMenuItemAnadirTiendaActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void jMenuItemAnadirProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirProductoActionPerformed
         // TODO add your handling code here:
 
         addProducto addproducto = new addProducto(this, true);
@@ -351,7 +364,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         addproducto.setVisible(true);
 
 
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_jMenuItemAnadirProductoActionPerformed
 
     private void copiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copiaSeguridadActionPerformed
         try {
@@ -384,7 +397,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_salirActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void jMenuItemAnadirEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirEmpleadoActionPerformed
         // TODO add your handling code here:
 
         addEmpleado addempleado = new addEmpleado(this, true);
@@ -393,14 +406,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         addempleado.setVisible(true);
 
 
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_jMenuItemAnadirEmpleadoActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void jMenuItemAnadirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirClienteActionPerformed
         // TODO add your handling code here:
         addCliente addcliente = new addCliente(this, true);
         addcliente.setLocation(this.getLocation());
         addcliente.setVisible(true);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_jMenuItemAnadirClienteActionPerformed
 
     private void importarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importarActionPerformed
         // TODO add your handling code here:
@@ -422,27 +435,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem_EliminarTiendaActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void jMenuItemEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEmpleadoActionPerformed
         // TODO add your handling code here:
-        if (hayTiendas()) {
+        
             removeEmpleado removeempleado = new removeEmpleado(this, true);
-            removeempleado.fijarModelo();
+            removeempleado.fijarModeloTiendas();
             removeempleado.fijarModeloEmpleado();
             removeempleado.setLocation(this.getLocation());
             removeempleado.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "No existen tiendas");
-        }
+        
+    }//GEN-LAST:event_jMenuItemEliminarEmpleadoActionPerformed
 
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void jMenuItemEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarClienteActionPerformed
         // TODO add your handling code here:
         removeCliente removecliente = new removeCliente(this, true);
         removecliente.setLocation(this.getLocation());
         removecliente.fijarModelo();
         removecliente.setVisible(true);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }//GEN-LAST:event_jMenuItemEliminarClienteActionPerformed
 
     private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
         // TODO add your handling code here:
@@ -457,29 +467,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         titularesrss.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
-    private void jMenuItemVerDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerDatosActionPerformed
+    private void jMenuItemMostrarTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarTiendasActionPerformed
         // TODO add your handling code here:
-        Datos datos = new Datos(this, true);
-        datos.setLocation(this.getLocation());
-        datos.setVisible(true);
+        
+        mostrarTiendas vertiendas = new mostrarTiendas(this, true);
+        vertiendas.fijarModelo();
+        vertiendas.setLocation(this.getLocation());
+        vertiendas.setVisible(true);
+        
+        
 
-    }//GEN-LAST:event_jMenuItemVerDatosActionPerformed
 
-    private void jMenuItemVerTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerTiendasActionPerformed
-        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemMostrarTiendasActionPerformed
 
-
-    }//GEN-LAST:event_jMenuItemVerTiendasActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarProductoActionPerformed
         removeProducto removeproducto = new removeProducto(this, true);
         removeproducto.setLocation(this.getLocation());
         //removeproducto.fijarModeloTiendas();
         removeproducto.fijarModeloProductos();
         removeproducto.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItemEliminarProductoActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jMenuItemModificarStockProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarStockProductoActionPerformed
         // TODO add your handling code here:
         modifyProductosStock modifyproductosStock = new modifyProductosStock(this, true);
         modifyproductosStock.setLocation(this.getLocation());
@@ -487,7 +496,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         modifyproductosStock.fijarModeloProductos();
         modifyproductosStock.fijarStockProducto();
         modifyproductosStock.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenuItemModificarStockProductoActionPerformed
+
+    private void jMenuItemMostrarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarProductosActionPerformed
+        // TODO add your handling code here:
+        mostrarProductos mostrarproductos = new mostrarProductos(this, true);
+        mostrarproductos.fijarModelo();
+        mostrarproductos.setLocation(this.getLocation());
+        mostrarproductos.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMostrarProductosActionPerformed
+
+    private void jMenuItemMostrarProductosTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarProductosTiendaActionPerformed
+        // TODO add your handling code here:
+        mostrarProductosTienda mostrarproductosTienda = new mostrarProductosTienda(this, true);
+        mostrarproductosTienda.fijarModeloTiendas();
+        mostrarproductosTienda.fijarModeloTabla();
+        
+        mostrarproductosTienda.setLocation(this.getLocation());
+        mostrarproductosTienda.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMostrarProductosTiendaActionPerformed
 
     /**
      * Con este método analizamos el archivo "data.json" y comprobamos que el
@@ -629,7 +656,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu archivoMenu;
+    private javax.swing.JMenu archivoMenuImportar;
     private javax.swing.JMenuItem copiaSeguridad;
     private javax.swing.JMenuItem importar;
     private javax.swing.JLabel jLabel1;
@@ -639,17 +666,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JMenuItem jMenuItemVerDatos;
-    private javax.swing.JMenuItem jMenuItemVerTiendas;
+    private javax.swing.JMenuItem jMenuItemAnadirCliente;
+    private javax.swing.JMenuItem jMenuItemAnadirEmpleado;
+    private javax.swing.JMenuItem jMenuItemAnadirProducto;
+    private javax.swing.JMenuItem jMenuItemAnadirTienda;
+    private javax.swing.JMenuItem jMenuItemEliminarCliente;
+    private javax.swing.JMenuItem jMenuItemEliminarEmpleado;
+    private javax.swing.JMenuItem jMenuItemEliminarProducto;
+    private javax.swing.JMenuItem jMenuItemModificarStockProducto;
+    private javax.swing.JMenuItem jMenuItemMostrarCliente;
+    private javax.swing.JMenuItem jMenuItemMostrarProductos;
+    private javax.swing.JMenuItem jMenuItemMostrarProductosTienda;
+    private javax.swing.JMenuItem jMenuItemMostrarTiendas;
     private javax.swing.JMenuItem jMenuItem_EliminarProductoTiendas;
     private javax.swing.JMenuItem jMenuItem_EliminarTienda;
     private javax.swing.JMenuItem salir;
@@ -672,7 +701,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     /*
     Este método desconectase dunha base de datos en SQLLite a que se lle pasa a conexión
      */
-    private static void desconnetDatabase(Connection connection) {
+    public static void desconnetDatabase(Connection connection) {
         try {
             if (connection != null) {
                 connection.close();

@@ -3,7 +3,14 @@
  */
 package com.ad03.ad03;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -12,7 +19,9 @@ import javax.swing.JOptionPane;
  * @author Manuel
  */
 public class removeEmpleado extends javax.swing.JDialog {
-
+    
+    HashMap<String,Integer> tiendasMap = new HashMap<>();
+    HashMap<String,Integer> empleadosMap = new HashMap<>();
     /**
      * Creates new form removeProducto
      * @param parent
@@ -33,9 +42,9 @@ public class removeEmpleado extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxTiendas = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxEmpleados = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -44,17 +53,17 @@ public class removeEmpleado extends javax.swing.JDialog {
 
         jLabel1.setText("Seleccione Tienda:");
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxTiendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboBoxTiendasActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Seleccione Empleado:");
 
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                jComboBoxEmpleadosActionPerformed(evt);
             }
         });
 
@@ -89,8 +98,8 @@ public class removeEmpleado extends javax.swing.JDialog {
                             .addComponent(jLabel2))
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, 220, Short.MAX_VALUE))))
+                            .addComponent(jComboBoxTiendas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxEmpleados, 0, 220, Short.MAX_VALUE))))
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
@@ -99,11 +108,11 @@ public class removeEmpleado extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxTiendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -114,10 +123,10 @@ public class removeEmpleado extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBoxTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTiendasActionPerformed
         // TODO add your handling code here:
         fijarModeloEmpleado();
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboBoxTiendasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -126,8 +135,8 @@ public class removeEmpleado extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        int i = this.jComboBox1.getSelectedIndex();
-        int j = this.jComboBox2.getSelectedIndex();
+        int i = this.jComboBoxTiendas.getSelectedIndex();
+        int j = this.jComboBoxEmpleados.getSelectedIndex();
         
         try{
             VentanaPrincipal.Empresa.Tiendas.get(i).Empleados.remove(j);
@@ -143,9 +152,9 @@ public class removeEmpleado extends javax.swing.JDialog {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void jComboBoxEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEmpleadosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_jComboBoxEmpleadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,26 +204,59 @@ public class removeEmpleado extends javax.swing.JDialog {
     /**
      * Con este método establecemos los elementos que se muestran en el desplegable
      */
-    public void fijarModelo(){
+    public void fijarModeloTiendas() {
+        String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
+
         ArrayList<String> cadena = new ArrayList<>();
-        for (Tienda t : VentanaPrincipal.Empresa.Tiendas){
-            cadena.add(t.getNombre() + " - " + t.getCiudad());
+
+        Connection con = VentanaPrincipal.connectDatabase();
+
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                this.tiendasMap.put(rs.getString("nombre") + " - " + rs.getString("ciudad"), rs.getInt("idTienda"));
+                cadena.add(rs.getString("nombre") + " - " + rs.getString("ciudad"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
-        this.jComboBox1.setModel(model);
+        this.jComboBoxTiendas.setModel(model);
     }
     
     /**
      * Con este método establecemos los elementos que se muestran en el desplegable
      */
     public void fijarModeloEmpleado(){
+        
+        String i = (String) this.jComboBoxTiendas.getSelectedItem();
+        int idTienda = this.tiendasMap.get(i);
+
+        String sql = "SELECT * FROM Empleados WHERE idEmpleado IN (SELECT Empleados_idEmpleado FROM Tiendas_Empleados WHERE Tiendas_idTienda = ("
+                + idTienda + "))ORDER BY nombre ASC";
+
         ArrayList<String> cadena = new ArrayList<>();
-        int i = this.jComboBox1.getSelectedIndex();
-        for (Empleado e : VentanaPrincipal.Empresa.Tiendas.get(i).getEmpleados()){
-            cadena.add(e.getNombre() + " " + e.getApellidos());
+
+        Connection con = VentanaPrincipal.connectDatabase();
+
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                this.empleadosMap.put(rs.getString("nombre")+" "+rs.getString("apellidos"), rs.getInt("idEmpleado"));
+                cadena.add(rs.getString("nombre")+" "+rs.getString("apellidos"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
-        this.jComboBox2.setModel(model);
+        this.jComboBoxEmpleados.setModel(model);
+
     }
     
     
@@ -222,8 +264,8 @@ public class removeEmpleado extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBoxEmpleados;
+    private javax.swing.JComboBox<String> jComboBoxTiendas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
