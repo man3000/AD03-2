@@ -113,12 +113,16 @@ public class removeProducto extends javax.swing.JDialog {
 
     private void jButton_eliminarProducto_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarProducto_EliminarActionPerformed
         
-        String prod = (String) this.jComboBoxProductos.getSelectedItem();
-        int idProducto_eliminar = this.productosMap.get(prod);
-        
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-            VentanaPrincipal.eliminarProducto(idProducto_eliminar);
-            this.dispose();
+        if (jComboBoxProductos.getItemCount() != 0) {
+            String prod = (String) this.jComboBoxProductos.getSelectedItem();
+            int idProducto_eliminar = this.productosMap.get(prod);
+            
+            if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                VentanaPrincipal.eliminarProducto(idProducto_eliminar);
+                this.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No existen productos", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton_eliminarProducto_EliminarActionPerformed

@@ -79,9 +79,17 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAnadirProductoActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAnadirProductoTienda">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="A&#xf1;adir Producto a Tienda"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAnadirProductoTiendaActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemModificarStockProducto">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Modificar Stock Producto"/>
+                <Property name="text" type="java.lang.String" value="Modificar Stock Producto de Tienda"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemModificarStockProductoActionPerformed"/>
@@ -89,10 +97,18 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemMostrarProductos">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mostrar Productos"/>
+                <Property name="text" type="java.lang.String" value="Mostrar Productos de la Franquicia"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemMostrarProductosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemMostrarStrockProducto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar Stock Productos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemMostrarStrockProductoActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemMostrarProductosTienda">
@@ -134,6 +150,22 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAnadirEmpleadoActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAnadirEmpleadoTienda">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="A&#xf1;adir Empleado a Tienda"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAnadirEmpleadoTiendaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemMostrarEmpleados">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar Empleados"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemMostrarEmpleadosActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEliminarEmpleado">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar Empleado"/>
@@ -141,6 +173,11 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemEliminarEmpleadoActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEliminarEmpleadoTienda">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Eliminar Empleado de Tienda"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>

@@ -10,28 +10,26 @@ import java.util.ArrayList;
  * @author Manuel Alejandro Álvarez Pérez
  */
 class Producto {
-    String id;
+    String nombre;
     String descripcion;
     Float precio;
-    int cantidad;
 
-    Producto(String id, String descripcion, String precio, String cantidad) throws ErrorNumero{
-        this.id = id;
+    Producto(String nombre, String descripcion, String precio) throws ErrorNumero{
+        this.nombre = nombre;
         this.descripcion = descripcion;
         try {
             this.precio = Float.parseFloat(precio.replace(",", "."));
-            this.cantidad = Integer.parseInt(cantidad);
         } catch (NumberFormatException e) {
             throw new ErrorNumero();
         }
     }
 
     public String getId() {
-        return id;
+        return nombre;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.nombre = id;
     }
 
     public String getDescripcion() {
@@ -50,11 +48,4 @@ class Producto {
         this.precio = precio;
     }
 
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
 }

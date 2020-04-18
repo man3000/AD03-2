@@ -126,7 +126,9 @@ public class removeProductosTiendas extends javax.swing.JDialog {
 
     private void jComboBoxTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTiendasActionPerformed
         // TODO add your handling code here:
-        fijarModeloProductos();
+        if (jComboBoxTiendas.getItemCount() != 0){
+                fijarModeloProductos();
+        }
     }//GEN-LAST:event_jComboBoxTiendasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -136,14 +138,19 @@ public class removeProductosTiendas extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String tien = (String) this.jComboBoxTiendas.getSelectedItem();
-        String prod = (String) this.jComboBoxProductos.getSelectedItem();
-        int idTienda_eliminar = this.tiendasMap.get(tien);
-        int idProducto_eliminar = this.productosMap.get(prod);
         
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-            VentanaPrincipal.eliminarProductoTienda(idTienda_eliminar, idProducto_eliminar);
-            this.dispose();
+        if (jComboBoxProductos.getItemCount() != 0 && jComboBoxTiendas.getItemCount() != 0) {
+            String tien = (String) this.jComboBoxTiendas.getSelectedItem();
+            String prod = (String) this.jComboBoxProductos.getSelectedItem();
+            int idTienda_eliminar = this.tiendasMap.get(tien);
+            int idProducto_eliminar = this.productosMap.get(prod);
+            
+            if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                VentanaPrincipal.eliminarProductoTienda(idTienda_eliminar, idProducto_eliminar);
+                this.dispose();
+            }
+        } else{
+            JOptionPane.showMessageDialog(this, "No existen tiendas o éstas no tienen productos", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -222,6 +229,10 @@ public class removeProductosTiendas extends javax.swing.JDialog {
 
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBoxTiendas.setModel(model);
+        
+        if (jComboBoxTiendas.getItemCount() != 0) {
+            fijarModeloProductos();
+        }
     }
 
     /**

@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
  */
 public class removeEmpleado extends javax.swing.JDialog {
     
-    HashMap<String,Integer> tiendasMap = new HashMap<>();
     HashMap<String,Integer> empleadosMap = new HashMap<>();
     /**
      * Creates new form removeProducto
@@ -41,8 +40,6 @@ public class removeEmpleado extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jComboBoxTiendas = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxEmpleados = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
@@ -50,14 +47,6 @@ public class removeEmpleado extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Eliminar empleado");
-
-        jLabel1.setText("Seleccione Tienda:");
-
-        jComboBoxTiendas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxTiendasActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Seleccione Empleado:");
 
@@ -87,29 +76,22 @@ public class removeEmpleado extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(42, 42, 42)
+                        .addComponent(jComboBoxEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(20, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBoxTiendas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxEmpleados, 0, 220, Short.MAX_VALUE))))
-                .addGap(15, 15, 15))
+                        .addComponent(jButton1)
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBoxTiendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBoxEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -123,11 +105,6 @@ public class removeEmpleado extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBoxTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTiendasActionPerformed
-        // TODO add your handling code here:
-        fijarModeloEmpleado();
-    }//GEN-LAST:event_jComboBoxTiendasActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -135,17 +112,14 @@ public class removeEmpleado extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        int i = this.jComboBoxTiendas.getSelectedIndex();
-        int j = this.jComboBoxEmpleados.getSelectedIndex();
         
-        try{
-            VentanaPrincipal.Empresa.Tiendas.get(i).Empleados.remove(j);
-            JOptionPane.showMessageDialog(this, "Empleado eliminado");
-            VentanaPrincipal.actualizarJson();
-            this.dispose();
-        } catch (ArrayIndexOutOfBoundsException e){
-            JOptionPane.showMessageDialog(this, "No exixten empleados en esta tienda");
-        }
+        String i = (String ) jComboBoxEmpleados.getSelectedItem();
+        int idEmpleado = empleadosMap.get(i);
+        
+        if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                VentanaPrincipal.eliminarEmpleado(idEmpleado);
+                this.dispose();
+            }
         
         
         
@@ -204,39 +178,15 @@ public class removeEmpleado extends javax.swing.JDialog {
     /**
      * Con este método establecemos los elementos que se muestran en el desplegable
      */
-    public void fijarModeloTiendas() {
-        String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
-
-        ArrayList<String> cadena = new ArrayList<>();
-
-        Connection con = VentanaPrincipal.connectDatabase();
-
-        try {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
-            while (rs.next()) {
-                this.tiendasMap.put(rs.getString("nombre") + " - " + rs.getString("ciudad"), rs.getInt("idTienda"));
-                cadena.add(rs.getString("nombre") + " - " + rs.getString("ciudad"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
-        this.jComboBoxTiendas.setModel(model);
-    }
+    
     
     /**
      * Con este método establecemos los elementos que se muestran en el desplegable
      */
     public void fijarModeloEmpleado(){
         
-        String i = (String) this.jComboBoxTiendas.getSelectedItem();
-        int idTienda = this.tiendasMap.get(i);
-
-        String sql = "SELECT * FROM Empleados WHERE idEmpleado IN (SELECT Empleados_idEmpleado FROM Tiendas_Empleados WHERE Tiendas_idTienda = ("
-                + idTienda + "))ORDER BY nombre ASC";
+      
+        String sql = "SELECT * FROM Empleados ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
 
@@ -265,8 +215,6 @@ public class removeEmpleado extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBoxEmpleados;
-    private javax.swing.JComboBox<String> jComboBoxTiendas;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
