@@ -47,6 +47,7 @@ public class mostrarClientes extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Mostrar Clientes");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,13 +153,12 @@ public class mostrarClientes extends javax.swing.JDialog {
                 aux = new ArrayList<>();
             }
 
-
             String[][] array = new String[elementosModelo.size()][];
             for (int i = 0; i < elementosModelo.size(); i++) {
                 ArrayList<String> row = elementosModelo.get(i);
                 array[i] = row.toArray(new String[row.size()]);
             }
-            
+
             for (int i = 0; i < array.length; i++) {
                 for (int j = 0; j < array[i].length; j++) {
                     array[i][j] = elementosModelo.get(i).get(j);

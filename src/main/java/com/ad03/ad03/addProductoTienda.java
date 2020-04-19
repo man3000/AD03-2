@@ -53,7 +53,7 @@ public class addProductoTienda extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nuevo Producto");
+        setTitle("Añadir Producto a Tienda");
 
         jLabel3.setText("Stock");
 
@@ -173,7 +173,7 @@ public class addProductoTienda extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton_addProductoCancelarActionPerformed
 
     private void jComboBoxTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTiendaActionPerformed
-        
+
     }//GEN-LAST:event_jComboBoxTiendaActionPerformed
 
     private void jComboBoxProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProductoActionPerformed
@@ -211,7 +211,7 @@ public class addProductoTienda extends javax.swing.JDialog {
         this.jComboBoxTienda.setModel(model);
 
         fijarModeloProducto();
-        
+
     }
 
     /**
@@ -241,7 +241,6 @@ public class addProductoTienda extends javax.swing.JDialog {
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBoxProducto.setModel(model);
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_addProductoCancelar;

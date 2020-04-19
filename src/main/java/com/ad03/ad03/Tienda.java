@@ -10,14 +10,15 @@ import java.util.ArrayList;
  * @author Manuel Alejandro Álvarez Pérez
  */
 public class Tienda {
-    
+
     String nombre;
     String ciudad;
     ArrayList<Producto> Productos = new ArrayList<>();
     ArrayList<Empleado> Empleados = new ArrayList<>();
 
-    Tienda(){}
-    
+    Tienda() {
+    }
+
     Tienda(String nombre, String ciudad) {
         this.nombre = nombre;
         this.ciudad = ciudad;
@@ -70,20 +71,20 @@ public class Tienda {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
-    
+
     /**
      *
      * @param p
      */
-    public void addProducto(Producto p){
+    public void addProducto(Producto p) {
         this.Productos.add(p);
     }
-    
+
     /**
      *
      * @param e
      */
-    public void addEmpleado(Empleado e){
+    public void addEmpleado(Empleado e) {
         this.Empleados.add(e);
     }
 }

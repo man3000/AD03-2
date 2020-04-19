@@ -69,8 +69,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     static File archivo_db = new File(ruta_db);
     static final File dataJson = new File(dir + sep + "src" + sep + "main" + sep + "java" + sep + "com" + sep + "ad03" + sep + "db" + sep + "provincias.json");
 
-    
-
     /**
      * Constructor principal que posiciona la ventana en el centro de la
      * pantalla
@@ -106,8 +104,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         archivoMenuImportar = new javax.swing.JMenu();
-        importar = new javax.swing.JMenuItem();
-        copiaSeguridad = new javax.swing.JMenuItem();
         salir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItemAnadirTienda = new javax.swing.JMenuItem();
@@ -149,22 +145,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 255, 153), null));
 
         archivoMenuImportar.setText("Archivo");
-
-        importar.setText("Importar");
-        importar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importarActionPerformed(evt);
-            }
-        });
-        archivoMenuImportar.add(importar);
-
-        copiaSeguridad.setText("Crear copia de seguridad");
-        copiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copiaSeguridadActionPerformed(evt);
-            }
-        });
-        archivoMenuImportar.add(copiaSeguridad);
 
         salir.setText("Salir");
         salir.addActionListener(new java.awt.event.ActionListener() {
@@ -414,9 +394,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         removeProductosTiendas removeproductosTiendas = new removeProductosTiendas(this, true);
-        
-        removeproductosTiendas.setVisible(true);
 
+        removeproductosTiendas.setVisible(true);
 
     }//GEN-LAST:event_jMenuItem_EliminarProductoTiendasActionPerformed
 
@@ -427,7 +406,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         addtienda.setLocation(this.getLocation());
         addtienda.setVisible(true);
 
-
     }//GEN-LAST:event_jMenuItemAnadirTiendaActionPerformed
 
     private void jMenuItemAnadirProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirProductoActionPerformed
@@ -437,45 +415,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         addproducto.setLocation(this.getLocation());
         addproducto.setVisible(true);
 
-
     }//GEN-LAST:event_jMenuItemAnadirProductoActionPerformed
-
-    private void copiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copiaSeguridadActionPerformed
-        try {
-            // TODO add your handling code here:
-            File file = new File(dataJson.getPath() + ".backup");
-            DataInputStream input = new DataInputStream(new FileInputStream(dataJson));
-            DataOutputStream output = new DataOutputStream(new FileOutputStream(file));
-            int i;
-            while ((i = input.read()) != -1) {
-                output.write(i);
-            }
-            input.close();
-            output.close();
-            JOptionPane.showMessageDialog(this, "Copia de seguridad creada con éxito");
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_copiaSeguridadActionPerformed
-
-    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        int option = JOptionPane.showConfirmDialog(this, "¿Confirma que desea salir de la aplicación? ", "Confirmación", JOptionPane.YES_NO_OPTION);
-        if (option == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-
-    }//GEN-LAST:event_salirActionPerformed
 
     private void jMenuItemAnadirEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirEmpleadoActionPerformed
 
         addEmpleado addempleado = new addEmpleado(this, true);
-        
-        addempleado.setVisible(true);
 
+        addempleado.setVisible(true);
 
     }//GEN-LAST:event_jMenuItemAnadirEmpleadoActionPerformed
 
@@ -484,37 +430,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         addcliente.setVisible(true);
     }//GEN-LAST:event_jMenuItemAnadirClienteActionPerformed
 
-    private void importarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importarActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            validarArchivoJson(chooser.getSelectedFile());
-            actualizarJson();
-        }
-    }//GEN-LAST:event_importarActionPerformed
-
     private void jMenuItem_EliminarTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_EliminarTiendaActionPerformed
         // TODO add your handling code here:
 
         removeTienda removetienda = new removeTienda(this, true);
-        
+
         removetienda.setVisible(true);
 
     }//GEN-LAST:event_jMenuItem_EliminarTiendaActionPerformed
 
     private void jMenuItemEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEmpleadoActionPerformed
         // TODO add your handling code here:
-        
-            removeEmpleado removeempleado = new removeEmpleado(this, true);
-            
-            removeempleado.setVisible(true);
-        
+
+        removeEmpleado removeempleado = new removeEmpleado(this, true);
+
+        removeempleado.setVisible(true);
+
     }//GEN-LAST:event_jMenuItemEliminarEmpleadoActionPerformed
 
     private void jMenuItemEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarClienteActionPerformed
         // TODO add your handling code here:
         removeCliente removecliente = new removeCliente(this, true);
-        
+
         removecliente.setVisible(true);
     }//GEN-LAST:event_jMenuItemEliminarClienteActionPerformed
 
@@ -533,46 +470,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemMostrarTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarTiendasActionPerformed
         // TODO add your handling code here:
-        
+
         mostrarTiendas vertiendas = new mostrarTiendas(this, true);
         vertiendas.fijarModelo();
         vertiendas.setLocation(this.getLocation());
         vertiendas.setVisible(true);
-        
-        
-
 
     }//GEN-LAST:event_jMenuItemMostrarTiendasActionPerformed
 
     private void jMenuItemEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarProductoActionPerformed
         removeProducto removeproducto = new removeProducto(this, true);
-        
+
         removeproducto.setVisible(true);
     }//GEN-LAST:event_jMenuItemEliminarProductoActionPerformed
 
     private void jMenuItemModificarStockProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarStockProductoActionPerformed
         // TODO add your handling code here:
         modifyProductosStock modifyproductosStock = new modifyProductosStock(this, true);
-        
+
         modifyproductosStock.setVisible(true);
     }//GEN-LAST:event_jMenuItemModificarStockProductoActionPerformed
 
     private void jMenuItemMostrarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarProductosActionPerformed
         // TODO add your handling code here:
         mostrarProductos mostrarproductos = new mostrarProductos(this, true);
-        
+
         mostrarproductos.setVisible(true);
     }//GEN-LAST:event_jMenuItemMostrarProductosActionPerformed
 
     private void jMenuItemMostrarProductosTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarProductosTiendaActionPerformed
         // TODO add your handling code here:
         mostrarProductosTienda mostrarproductosTienda = new mostrarProductosTienda(this, true);
-        
+
         mostrarproductosTienda.setVisible(true);
     }//GEN-LAST:event_jMenuItemMostrarProductosTiendaActionPerformed
 
     private void jMenuItemAnadirProductoTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirProductoTiendaActionPerformed
-        
+
         addProductoTienda addproductoTienda = new addProductoTienda(this, true);
         //addproductoTienda.fijarModeloTienda();
         //addproductoTienda.setLocation(this.getLocation());
@@ -582,38 +516,37 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItemMostrarStrockProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarStrockProductoActionPerformed
         // TODO add your handling code here:
         mostrarProductosStock showproductosStock = new mostrarProductosStock(this, true);
-        
+
         showproductosStock.setVisible(true);
-        
-       
+
     }//GEN-LAST:event_jMenuItemMostrarStrockProductoActionPerformed
 
     private void jMenuItemAnadirEmpleadoTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirEmpleadoTiendaActionPerformed
         // TODO add your handling code here:
         addEmpleadoTienda addempleadoTienda = new addEmpleadoTienda(this, true);
-        
+
         addempleadoTienda.setVisible(true);
-                
+
     }//GEN-LAST:event_jMenuItemAnadirEmpleadoTiendaActionPerformed
 
     private void jMenuItemMostrarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarEmpleadosActionPerformed
         // TODO add your handling code here:
         mostrarEmpleados mostrarempleados = new mostrarEmpleados(this, true);
-        
+
         mostrarempleados.setVisible(true);
     }//GEN-LAST:event_jMenuItemMostrarEmpleadosActionPerformed
 
     private void jMenuItemEliminarEmpleadoTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEmpleadoTiendaActionPerformed
         // TODO add your handling code here:
         removeEmpleadosTiendas removeempleadosTiendas = new removeEmpleadosTiendas(this, true);
-        
+
         removeempleadosTiendas.setVisible(true);
     }//GEN-LAST:event_jMenuItemEliminarEmpleadoTiendaActionPerformed
 
     private void jMenuItemMostrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarClienteActionPerformed
         // TODO add your handling code here:
         mostrarClientes mostrarclientes = new mostrarClientes(this, true);
-        
+
         mostrarclientes.setVisible(true);
     }//GEN-LAST:event_jMenuItemMostrarClienteActionPerformed
 
@@ -633,6 +566,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mostrarEmpleadosTienda mostrarempleadosTienda = new mostrarEmpleadosTienda(this, true);
         mostrarempleadosTienda.setVisible(true);
      }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        int option = JOptionPane.showConfirmDialog(this, "¿Confirma que desea salir de la aplicación? ", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_salirActionPerformed
 
     /**
      * Con este método analizamos el archivo "data.json" y comprobamos que el
@@ -772,11 +712,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu archivoMenuImportar;
-    private javax.swing.JMenuItem copiaSeguridad;
-    private javax.swing.JMenuItem importar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -841,7 +778,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     /*
     Método que crea a tabla persona nunha base de datos persoa  
      */
-
     private static void crearTablas(Connection con) {
         try {
             String sql = "CREATE TABLE IF NOT EXISTS Provincias (\n"
@@ -936,7 +872,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
 
     }
-    
+
     private void rellenarProvincias(Connection con) {
 
         for (Provincia prov : provincias.getProvincias()) {
@@ -971,9 +907,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             pstmt.setString(2, apel);
             pstmt.setString(3, mail);
             pstmt.executeUpdate();
-            
+
             System.out.println("Se ha insertado el cliente " + nom + " " + apel);
-            
+
         } catch (SQLException e) {
             if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
                 System.out.println("El registro ya esiste");
@@ -1013,17 +949,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         desconnetDatabase(con);
         return idInsertado;
     }
-        
+
     public static void insertarProductoTienda(int idTien, int idProd, int stock) {
 
         Connection con = connectDatabase();
-        
+
         String sqlTablaUnion = "REPLACE INTO Tiendas_Productos(Tiendas_idTienda,Productos_idProducto,stock) VALUES(?,?,?)";
 
         try {
 
             PreparedStatement pstmtUnion = con.prepareStatement(sqlTablaUnion);
-
 
             pstmtUnion.setInt(1, idTien);
             pstmtUnion.setInt(2, idProd);
@@ -1074,7 +1009,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         desconnetDatabase(con);
         return idInsertado;
     }
-    
+
     public static int insertarEmpleado(String nom, String apel) {
         Connection con = connectDatabase();
         int idInsertado = 0;
@@ -1092,7 +1027,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             idInsertado = (int) rs.getLong(1);
 
             System.out.println("Se ha insertado el empleado " + nom + " " + apel + " con id " + idInsertado);
-            
+
         } catch (SQLException e) {
             if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
                 System.out.println(e.getMessage());
@@ -1103,14 +1038,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
 
         desconnetDatabase(con);
-        
+
         return idInsertado;
     }
 
     public static void insertarEmpleadoTienda(int idTienda, int idEmpleado, int horasSemanales) {
-        
+
         Connection con = connectDatabase();
-        
+
         String sqlTablaUnion = "REPLACE INTO Tiendas_Empleados(Tiendas_idTienda, Empleados_idEmpleado, horas_semanales) VALUES(?,?,?)";
 
         try {
@@ -1140,7 +1075,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         String sql = "DELETE FROM Tiendas WHERE idTienda = (?);";
         String sqlCascadeProductos = "DELETE FROM Tiendas_Productos WHERE Tiendas_idTienda = (?);";
         String sqlCascadeEmpleados = "DELETE FROM Tiendas_Empleados WHERE Tiendas_idTienda = (?);";
-        
 
         try {
 
@@ -1155,8 +1089,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             pstmt.executeUpdate();
             pstmtProductos.executeUpdate();
             pstmtEmpleados.executeUpdate();
-            
-            System.out.println("Eliminada la tienda con id " + idTienda );
+
+            System.out.println("Eliminada la tienda con id " + idTienda);
 
         } catch (SQLException e) {
 
@@ -1188,7 +1122,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         desconnetDatabase(con);
     }
-    
+
     public static void eliminarEmpleadoTienda(int idTienda, int idEmpleado) {
         Connection con = connectDatabase();
 
@@ -1212,12 +1146,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     public static void eliminarProducto(int idProducto) {
-        
+
         Connection con = connectDatabase();
 
         String sql = "DELETE FROM Productos WHERE idProducto = (?);";
         String sqlCascadeProductos = "DELETE FROM Tiendas_Productos WHERE Productos_idProducto = (?);";
-        
 
         try {
 
@@ -1229,8 +1162,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             pstmt.executeUpdate();
             pstmtProductos.executeUpdate();
-            
-            System.out.println("Eliminado el producto con id " + idProducto );
+
+            System.out.println("Eliminado el producto con id " + idProducto);
 
         } catch (SQLException e) {
 
@@ -1239,8 +1172,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
 
         desconnetDatabase(con);
-        
-        
+
         /*Connection con = connectDatabase();
         
         String sql = "DELETE FROM Productos WHERE idProducto = "
@@ -1260,14 +1192,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         desconnetDatabase(con);*/
     }
-    
+
     public static void eliminarEmpleado(int idEmpleado) {
-        
+
         Connection con = connectDatabase();
 
         String sql = "DELETE FROM Empleados WHERE idEmpleado = (?);";
         String sqlCascadeEmpleados = "DELETE FROM Tiendas_Empleados WHERE Empleados_idEmpleado = (?);";
-        
 
         try {
 
@@ -1279,8 +1210,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             pstmt.executeUpdate();
             pstmtEmpleados.executeUpdate();
-            
-            System.out.println("Eliminado el empleado con id " + idEmpleado );
+
+            System.out.println("Eliminado el empleado con id " + idEmpleado);
 
         } catch (SQLException e) {
 
@@ -1289,7 +1220,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
 
         desconnetDatabase(con);
-        
+
         /*Connection con = connectDatabase();
         
         String sql = "DELETE FROM Empleados WHERE idEmpleado = "

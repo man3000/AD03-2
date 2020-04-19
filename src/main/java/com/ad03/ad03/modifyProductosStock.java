@@ -56,6 +56,7 @@ public class modifyProductosStock extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar Stock de Productos");
 
         jLabel1.setText("Seleccione Tienda:");
 
@@ -209,7 +210,7 @@ public class modifyProductosStock extends javax.swing.JDialog {
         this.jComboBoxTiendas.setModel(model);
 
         if (jComboBoxTiendas.getItemCount() != 0) {
-            
+
             fijarModeloProductos();
 
         }
@@ -223,21 +224,21 @@ public class modifyProductosStock extends javax.swing.JDialog {
     public void fijarModeloProductos() {
 
         if (jComboBoxTiendas.getItemCount() != 0) {
-            
+
             String i = (String) this.jComboBoxTiendas.getSelectedItem();
             int idTienda = this.tiendasMap.get(i);
-            
+
             String sql = "SELECT * FROM Productos WHERE idProducto IN (SELECT Productos_idProducto FROM Tiendas_Productos WHERE Tiendas_idTienda = ("
                     + idTienda + "))ORDER BY nombre ASC";
-            
+
             ArrayList<String> cadena = new ArrayList<>();
-            
+
             Connection con = VentanaPrincipal.connectDatabase();
-            
+
             try {
                 Statement statement = con.createStatement();
                 ResultSet rs = statement.executeQuery(sql);
-                
+
                 while (rs.next()) {
                     this.productosMap.put(rs.getString("nombre"), rs.getInt("idProducto"));
                     cadena.add(rs.getString("nombre"));
@@ -245,10 +246,10 @@ public class modifyProductosStock extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
             this.jComboBoxProductos.setModel(model);
-            
+
             if (jComboBoxProductos.getItemCount() == 0) {
                 this.jTextFieldStock.setText("N/A");
             } else {
@@ -262,31 +263,30 @@ public class modifyProductosStock extends javax.swing.JDialog {
         if (jComboBoxProductos.getItemCount() != 0) {
             String tien = (String) this.jComboBoxTiendas.getSelectedItem();
             String prod = (String) this.jComboBoxProductos.getSelectedItem();
-            
+
             int idTienda_modificar = this.tiendasMap.get(tien);
             int idProducto_modificar = this.productosMap.get(prod);
             String stock = "";
             String sql = "SELECT * FROM Tiendas_Productos WHERE Tiendas_idTienda = "
                     + idTienda_modificar + " AND Productos_idProducto = "
                     + idProducto_modificar + ";";
-            
+
             Connection con = VentanaPrincipal.connectDatabase();
-            
+
             try {
                 Statement statement = con.createStatement();
                 ResultSet rs = statement.executeQuery(sql);
-                
+
                 while (rs.next()) {
                     stock = Integer.toString(rs.getInt("stock"));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             this.jTextFieldStock.setText(stock);
         }
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_modificarStockProducto_cancelar;

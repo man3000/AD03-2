@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Manuel
  */
 class Provincias {
-    
+
     ArrayList<Provincia> provincias;
 
     public Provincias() {
@@ -29,6 +29,5 @@ class Provincias {
     public void setProvincias(ArrayList<Provincia> provincias) {
         this.provincias = provincias;
     }
-    
-    
+
 }

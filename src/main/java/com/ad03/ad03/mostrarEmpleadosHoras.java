@@ -56,6 +56,7 @@ public class mostrarEmpleadosHoras extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Mostrar las Horas de Empleados");
 
         jLabel1.setText("Seleccione Tienda:");
 
@@ -92,19 +93,18 @@ public class mostrarEmpleadosHoras extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton_modificarStockProducto_cancelar))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(214, 214, 214)
-                            .addComponent(jTextFieldHoras, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2))
-                            .addGap(42, 42, 42)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jComboBoxTiendas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBoxEmpleados, 0, 220, Short.MAX_VALUE)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(214, 214, 214)
+                        .addComponent(jTextFieldHoras, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBoxTiendas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxEmpleados, 0, 220, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -174,7 +174,7 @@ public class mostrarEmpleadosHoras extends javax.swing.JDialog {
         this.jComboBoxTiendas.setModel(model);
 
         if (jComboBoxTiendas.getItemCount() != 0) {
-            
+
             fijarModeloEmpleados();
 
         }
@@ -188,21 +188,21 @@ public class mostrarEmpleadosHoras extends javax.swing.JDialog {
     public void fijarModeloEmpleados() {
 
         if (jComboBoxTiendas.getItemCount() != 0) {
-            
+
             String i = (String) this.jComboBoxTiendas.getSelectedItem();
             int idTienda = this.tiendasMap.get(i);
-            
+
             String sql = "SELECT * FROM Empleados WHERE idEmpleado IN (SELECT Empleados_idEmpleado FROM Tiendas_Empleados WHERE Tiendas_idTienda = ("
                     + idTienda + "))ORDER BY nombre ASC";
-            
+
             ArrayList<String> cadena = new ArrayList<>();
-            
+
             Connection con = VentanaPrincipal.connectDatabase();
-            
+
             try {
                 Statement statement = con.createStatement();
                 ResultSet rs = statement.executeQuery(sql);
-                
+
                 while (rs.next()) {
                     this.empleadosMap.put(rs.getString("nombre") + " " + rs.getString("apellidos"), rs.getInt("idEmpleado"));
                     cadena.add(rs.getString("nombre") + " " + rs.getString("apellidos"));
@@ -210,10 +210,10 @@ public class mostrarEmpleadosHoras extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());            
+
+            DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
             this.jComboBoxEmpleados.setModel(model);
-            
+
             if (jComboBoxEmpleados.getItemCount() == 0) {
                 this.jTextFieldHoras.setText("N/A");
             } else {
@@ -227,31 +227,30 @@ public class mostrarEmpleadosHoras extends javax.swing.JDialog {
         if (jComboBoxEmpleados.getItemCount() != 0) {
             String tien = (String) this.jComboBoxTiendas.getSelectedItem();
             String emp = (String) this.jComboBoxEmpleados.getSelectedItem();
-            
+
             int idTienda_modificar = this.tiendasMap.get(tien);
             int idEmpleado_modificar = this.empleadosMap.get(emp);
             String hr = "";
             String sql = "SELECT * FROM Tiendas_Empleados WHERE Tiendas_idTienda = "
                     + idTienda_modificar + " AND Empleados_idEmpleado = "
                     + idEmpleado_modificar + ";";
-            
+
             Connection con = VentanaPrincipal.connectDatabase();
-            
+
             try {
                 Statement statement = con.createStatement();
                 ResultSet rs = statement.executeQuery(sql);
-                
+
                 while (rs.next()) {
                     hr = Integer.toString(rs.getInt("horas_semanales"));
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
-            
+
             this.jTextFieldHoras.setText(hr);
         }
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_modificarStockProducto_cancelar;

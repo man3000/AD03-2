@@ -10,11 +10,12 @@ import java.util.ArrayList;
  * @author Manuel Alejandro Álvarez Pérez
  */
 class Producto {
+
     String nombre;
     String descripcion;
     Float precio;
 
-    Producto(String nombre, String descripcion, String precio) throws ErrorNumero{
+    Producto(String nombre, String descripcion, String precio) throws ErrorNumero {
         this.nombre = nombre;
         this.descripcion = descripcion;
         try {

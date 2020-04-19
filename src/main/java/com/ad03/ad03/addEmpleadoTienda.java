@@ -53,7 +53,7 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nuevo Producto");
+        setTitle("Añadir Empleado a Tienda");
 
         jLabel3.setText("Horas Semanales");
 
@@ -188,7 +188,7 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
      * desplegable
      */
     public void fijarModeloTienda() {
-        
+
         String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
@@ -241,7 +241,6 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBoxEmpleado.setModel(model);
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField horasSemanales;

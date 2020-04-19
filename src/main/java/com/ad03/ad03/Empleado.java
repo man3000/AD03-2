@@ -8,6 +8,7 @@ package com.ad03.ad03;
  * @author Manuel Alejandro Álvarez Pérez
  */
 class Empleado {
+
     String nombre;
     String apellidos;
 
@@ -31,5 +32,5 @@ class Empleado {
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
-    
+
 }

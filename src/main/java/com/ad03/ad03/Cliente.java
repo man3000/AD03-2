@@ -8,6 +8,7 @@ package com.ad03.ad03;
  * @author Manuel Alejandro Álvarez Pérez
  */
 public class Cliente {
+
     String nombre;
     String apellidos;
     String email;
@@ -17,7 +18,7 @@ public class Cliente {
         this.apellidos = apellidos;
         this.email = email;
     }
-    
+
     /**
      *
      * @return
@@ -65,5 +66,5 @@ public class Cliente {
     public void setEmail(String email) {
         this.email = email;
     }
-     
+
 }

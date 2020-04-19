@@ -35,7 +35,8 @@ public class removeTienda extends javax.swing.JDialog {
         initComponents();
         setLocation(parent.getLocation());
         fijarModelo();
-        
+        setTitle("Eliminar Tienda");
+
     }
 
     /**
@@ -53,6 +54,7 @@ public class removeTienda extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Eliminar Tiendas");
 
         jLabel1.setText("Seleccionar Tienda:");
 
@@ -118,7 +120,6 @@ public class removeTienda extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No existen tiendas", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -129,7 +130,6 @@ public class removeTienda extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-
     /**
      * Con este método establecemos los elementos que se muestran en el
      * desplegable

@@ -50,6 +50,7 @@ public class removeProducto extends javax.swing.JDialog {
         jButton_eliminarProducto_Eliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Eliminar Productos");
 
         jLabel2.setText("Seleccione Producto:");
 
@@ -114,11 +115,11 @@ public class removeProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton_eliminarProducto_CancelarActionPerformed
 
     private void jButton_eliminarProducto_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarProducto_EliminarActionPerformed
-        
+
         if (jComboBoxProductos.getItemCount() != 0) {
             String prod = (String) this.jComboBoxProductos.getSelectedItem();
             int idProducto_eliminar = this.productosMap.get(prod);
-            
+
             if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 VentanaPrincipal.eliminarProducto(idProducto_eliminar);
                 this.dispose();
@@ -136,14 +137,11 @@ public class removeProducto extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-
-
     /**
      * Con este método establecemos los elementos que se muestran en el
      * desplegable
      */
     public void fijarModeloProductos() {
-
 
         String sql = "SELECT * FROM Productos ORDER BY nombre ASC";
 
@@ -166,7 +164,6 @@ public class removeProducto extends javax.swing.JDialog {
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBoxProductos.setModel(model);
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_eliminarProducto_Cancelar;

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author Manuel Alejandro Álvarez Pérez
  */
 public class Empresa {
-    
+
     ArrayList<Tienda> Tiendas = new ArrayList<>();
     ArrayList<Cliente> Clientes = new ArrayList<>();
 
@@ -19,7 +19,7 @@ public class Empresa {
      */
     public Empresa() {
     }
-    
+
     /**
      *
      * @param t
@@ -50,8 +50,5 @@ public class Empresa {
     public String toString() {
         return "Empresa";
     }
-    
-    
-     
-    
+
 }

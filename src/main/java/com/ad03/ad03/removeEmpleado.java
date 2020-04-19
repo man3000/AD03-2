@@ -50,7 +50,7 @@ public class removeEmpleado extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Eliminar empleado");
+        setTitle("Eliminar Empleado");
 
         jLabel2.setText("Seleccione Empleado:");
 
@@ -128,9 +128,7 @@ public class removeEmpleado extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No existen empleados", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-
     }//GEN-LAST:event_jButton2ActionPerformed
-
 
     private void jComboBoxEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEmpleadosActionPerformed
         // TODO add your handling code here:
@@ -213,7 +211,6 @@ public class removeEmpleado extends javax.swing.JDialog {
         this.jComboBoxEmpleados.setModel(model);
 
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

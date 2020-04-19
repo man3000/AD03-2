@@ -22,9 +22,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Manuel
  */
 public class mostrarEmpleadosTienda extends javax.swing.JDialog {
-    
+
     DefaultTableModel modeloTabla;
-    HashMap<String,Integer> tiendasMap = new HashMap<>();
+    HashMap<String, Integer> tiendasMap = new HashMap<>();
     String[] titulosColumnas = {"idEmpleado", "Nombre", "Apellidos"};
     ArrayList<ArrayList<String>> elementosModelo = new ArrayList<>();
 
@@ -35,7 +35,7 @@ public class mostrarEmpleadosTienda extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         fijarModeloTiendas();
-        
+
         setLocation(parent.getLocation());
     }
 
@@ -54,6 +54,7 @@ public class mostrarEmpleadosTienda extends javax.swing.JDialog {
         jComboBoxTiendas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Mostrar Empleados de Tiendas");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,7 +115,6 @@ public class mostrarEmpleadosTienda extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBoxTiendas;
     private javax.swing.JLabel jLabel1;
@@ -123,7 +123,7 @@ public class mostrarEmpleadosTienda extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     public void fijarModeloTiendas() {
-        
+
         String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
@@ -144,65 +144,64 @@ public class mostrarEmpleadosTienda extends javax.swing.JDialog {
 
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBoxTiendas.setModel(model);
-        
+
         if (jComboBoxTiendas.getItemCount() != 0) {
             fijarModeloTabla();
         }
     }
-    
+
     void fijarModeloTabla() {
 
         if (jComboBoxTiendas.getItemCount() != 0) {
             String elem = (String) this.jComboBoxTiendas.getSelectedItem();
-            
+
             int idTiendaMostrar = this.tiendasMap.get(elem);
             System.out.println(idTiendaMostrar);
-            
+
             String sql = "SELECT * FROM Empleados WHERE idEmpleado IN (SELECT Empleados_idEmpleado from Tiendas_Empleados where Tiendas_idTienda = "
                     + idTiendaMostrar + ") ORDER BY idEmpleado ASC";
-            
+
             ArrayList<String> aux = new ArrayList<>();
             Float tempFloat;
             Connection con = VentanaPrincipal.connectDatabase();
-            
+
             try {
                 Statement statement = con.createStatement();
                 ResultSet rs = statement.executeQuery(sql);
-                
+
                 while (rs.next()) {
                     aux.add(Integer.toString(rs.getInt("idEmpleado")));
                     aux.add(rs.getString("nombre"));
                     aux.add(rs.getString("apellidos"));
-                    
-                    
+
                     elementosModelo.add(aux);
                     aux = new ArrayList<>();
                 }
-                
+
                 String[][] array = new String[elementosModelo.size()][];
                 for (int i = 0; i < elementosModelo.size(); i++) {
                     ArrayList<String> row = elementosModelo.get(i);
                     array[i] = row.toArray(new String[row.size()]);
                 }
-                
+
                 for (int i = 0; i < array.length; i++) {
                     for (int j = 0; j < array[i].length; j++) {
                         array[i][j] = elementosModelo.get(i).get(j);
                         System.out.println(elementosModelo.get(i).get(j));
                     }
                 }
-                
+
                 this.modeloTabla = new DefaultTableModel(array, this.titulosColumnas);
-                
+
                 this.jTable1.setModel(modeloTabla);
-                
+
                 this.elementosModelo = new ArrayList<>();
-                
+
             } catch (SQLException ex) {
                 VentanaPrincipal.desconnetDatabase(con);
                 Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             VentanaPrincipal.desconnetDatabase(con);
         }
 

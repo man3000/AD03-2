@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
  */
 public class addTienda extends javax.swing.JDialog {
 
-    private HashMap<String,Integer> provinciasMap = new HashMap<>();
-    
+    private HashMap<String, Integer> provinciasMap = new HashMap<>();
+
     /**
      * Creates new form addTienda
      *
@@ -31,7 +31,7 @@ public class addTienda extends javax.swing.JDialog {
     public addTienda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
     }
 
     /**
@@ -53,7 +53,7 @@ public class addTienda extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nueva tienda");
+        setTitle("Añadir Tienda");
 
         jLabel1.setText("Nombre:");
 
@@ -125,12 +125,11 @@ public class addTienda extends javax.swing.JDialog {
 
     private void jButton_addTienda_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addTienda_OKActionPerformed
         // TODO add your handling code here:
-        
-        String i = (String)this.jComboBox1.getSelectedItem();
-        
+
+        String i = (String) this.jComboBox1.getSelectedItem();
+
         int idProvincia = this.provinciasMap.get(i);
-        
-        
+
         if (this.jTextField_Nombre.getText().equals("") || this.jTextField_Ciudad.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Se deben rellenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -205,7 +204,7 @@ public class addTienda extends javax.swing.JDialog {
         ArrayList<String> cadena = new ArrayList<>();
 
         Connection con = VentanaPrincipal.connectDatabase();
-        
+
         try {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -217,8 +216,7 @@ public class addTienda extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-        
+
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBox1.setModel(model);
     }

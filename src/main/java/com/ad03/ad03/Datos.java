@@ -81,7 +81,6 @@ public class Datos extends javax.swing.JDialog {
 
     private void jTree1TreeExpanded(javax.swing.event.TreeExpansionEvent evt) {//GEN-FIRST:event_jTree1TreeExpanded
         // TODO add your handling code here:
-        
 
     }//GEN-LAST:event_jTree1TreeExpanded
 
@@ -140,7 +139,7 @@ public class Datos extends javax.swing.JDialog {
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Empresa");
         DefaultMutableTreeNode tiendas = new DefaultMutableTreeNode("Tiendas");
         DefaultMutableTreeNode clientes = new DefaultMutableTreeNode("Clientes");
-        
+
         DefaultMutableTreeNode empleados;
         DefaultMutableTreeNode productos;
         DefaultMutableTreeNode tienda_aux;
@@ -160,9 +159,9 @@ public class Datos extends javax.swing.JDialog {
             tiendas.add(tienda_aux);
 
         }
-        
+
         for (Cliente c : VentanaPrincipal.Empresa.Clientes) {
-            clientes.add(new DefaultMutableTreeNode(c.getNombre()+" "+c.getApellidos()));
+            clientes.add(new DefaultMutableTreeNode(c.getNombre() + " " + c.getApellidos()));
         }
 
         raiz.add(tiendas);
@@ -170,9 +169,6 @@ public class Datos extends javax.swing.JDialog {
         this.modelo = raiz;
 
     }
-
-    
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;

@@ -11,17 +11,18 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+
 /**
  *
  * @author Manuel Alejandro Álvarez Pérez
  */
 public class addProducto extends javax.swing.JDialog {
 
-    
-    private HashMap<String,Integer> tiendasMap = new HashMap<>();
-    
+    private HashMap<String, Integer> tiendasMap = new HashMap<>();
+
     /**
      * Creates new form addProducto
+     *
      * @param parent
      * @param modal
      */
@@ -50,7 +51,7 @@ public class addProducto extends javax.swing.JDialog {
         jButton_addProductoOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nuevo Producto");
+        setTitle("Añadir Producto");
 
         jLabel2.setText("Nombre:");
 
@@ -132,21 +133,21 @@ public class addProducto extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_addProductoOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addProductoOKActionPerformed
-        
-        if (this.nombre_producto.getText().equals("") || 
-                this.precio.getText().equals("")  || 
-                this.descripcion.getText().equals("")){
+
+        if (this.nombre_producto.getText().equals("")
+                || this.precio.getText().equals("")
+                || this.descripcion.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Se deben rellenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-        
+
             try {
-                Producto p = new Producto(this.nombre_producto.getText(),this.descripcion.getText(),this.precio.getText());
-                
+                Producto p = new Producto(this.nombre_producto.getText(), this.descripcion.getText(), this.precio.getText());
+
                 String nom = this.nombre_producto.getText();
                 String desc = this.descripcion.getText();
                 Float prec = Float.parseFloat(this.precio.getText());
                 VentanaPrincipal.insertarProducto(nom, desc, prec);
-                
+
                 this.dispose();
             } catch (ErrorNumero | NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "El precio no está en el formato correcto", "Error", JOptionPane.ERROR_MESSAGE);
@@ -204,12 +205,12 @@ public class addProducto extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-        
-        
+
     }
-    
+
     /**
-     * Con este método establecemos los elementos que se muestran en el desplegable
+     * Con este método establecemos los elementos que se muestran en el
+     * desplegable
      */
     /*public void fijarModelo(){
     String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
@@ -234,7 +235,6 @@ public class addProducto extends javax.swing.JDialog {
     DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
     this.jComboBox1.setModel(model);
     }*/
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea descripcion;
     private javax.swing.JButton jButton_addProductoCancelar;

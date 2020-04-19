@@ -19,7 +19,7 @@ public class addEmpleado extends javax.swing.JDialog {
      */
     public addEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
+
         initComponents();
         setLocation(parent.getLocation());
     }
@@ -132,7 +132,6 @@ public class addEmpleado extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-
     /**
      * Con este método establecemos los elementos que se muestran en el
      * desplegable
@@ -159,7 +158,6 @@ public class addEmpleado extends javax.swing.JDialog {
     DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
     this.jComboBox1.setModel(model);
     }*/
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellidos_empleados;
     private javax.swing.JButton jButton_addEmpleado_Cancelar;

@@ -47,6 +47,7 @@ public class mostrarProductos extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Mostrar Productos");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -84,7 +85,6 @@ public class mostrarProductos extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
@@ -107,21 +107,20 @@ public class mostrarProductos extends javax.swing.JDialog {
                 aux.add(rs.getString("nombre"));
                 aux.add(rs.getString("descripcion"));
                 tempFloat = rs.getFloat("precio");
-                
+
                 DecimalFormat df = new DecimalFormat("####.##");
                 aux.add(df.format(tempFloat));
-                
+
                 elementosModelo.add(aux);
                 aux = new ArrayList<>();
             }
-
 
             String[][] array = new String[elementosModelo.size()][];
             for (int i = 0; i < elementosModelo.size(); i++) {
                 ArrayList<String> row = elementosModelo.get(i);
                 array[i] = row.toArray(new String[row.size()]);
             }
-            
+
             for (int i = 0; i < array.length; i++) {
                 for (int j = 0; j < array[i].length; j++) {
                     array[i][j] = elementosModelo.get(i).get(j);

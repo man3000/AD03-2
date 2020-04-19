@@ -7,7 +7,7 @@ package com.ad03.ad03;
  *
  * @author Manuel Alejandro Álvarez Pérez
  */
-public class ErrorNumero extends Exception{
+public class ErrorNumero extends Exception {
 
     /**
      *
@@ -22,6 +22,5 @@ public class ErrorNumero extends Exception{
     public ErrorNumero(String message) {
         super(message);
     }
-    
-    
+
 }

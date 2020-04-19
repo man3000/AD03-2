@@ -10,7 +10,7 @@ package com.ad03.ad03;
  * @author Manuel
  */
 public class Provincia {
-    
+
     String id;
     String nome;
 
@@ -18,8 +18,6 @@ public class Provincia {
         this.id = id;
         this.nome = nome;
     }
-    
-    
 
     public String getId() {
         return id;
@@ -36,7 +34,5 @@ public class Provincia {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-    
-    
+
 }

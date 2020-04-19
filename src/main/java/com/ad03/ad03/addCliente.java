@@ -13,6 +13,7 @@ public class addCliente extends javax.swing.JDialog {
 
     /**
      * Creates new form addCliente
+     *
      * @param parent
      * @param modal
      */
@@ -41,7 +42,7 @@ public class addCliente extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nuevo cliente");
+        setTitle("Nuevo Cliente");
         setName("Nuevo Cliente"); // NOI18N
 
         jLabel1.setText("Nombre:");
@@ -130,19 +131,18 @@ public class addCliente extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if (this.nombre.getText().equals("") || 
-                this.apellidos.getText().equals("") ||
-                this.email.getText().equals("")){
+        if (this.nombre.getText().equals("")
+                || this.apellidos.getText().equals("")
+                || this.email.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Se deben rellenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-            
+
         } else {
             String nom = this.nombre.getText();
             String apel = this.apellidos.getText();
             String mail = this.email.getText();
-            
-            VentanaPrincipal.insertarCliente(nom,apel,mail);
-            
-           
+
+            VentanaPrincipal.insertarCliente(nom, apel, mail);
+
             this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -8,21 +8,20 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-
 /**
  *
  * @author Manuel
  */
 public class Handler extends DefaultHandler {
-    
+
     private ArrayList<String> titulares = new ArrayList<>();
     private String titularaux;
 
     boolean isItem = false;
-    
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (qName.equals("item")){
+        if (qName.equals("item")) {
             isItem = true;
             //System.out.println("item");
         }
@@ -30,18 +29,18 @@ public class Handler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        if (qName.equals("item")){
+        if (qName.equals("item")) {
             isItem = false;
         }
-        
-        if (qName.equals("title") && isItem){
+
+        if (qName.equals("title") && isItem) {
             titulares.add(titularaux);
         }
     }
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        
+
         this.titularaux = new String(ch, start, length);
     }
 
@@ -53,5 +52,4 @@ public class Handler extends DefaultHandler {
         return titulares;
     }
 
-    
 }

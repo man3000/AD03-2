@@ -13,6 +13,7 @@ public class TitularesRSS extends javax.swing.JDialog {
 
     /**
      * Creates new form TitularesRSS
+     *
      * @param parent
      * @param modal
      */
@@ -34,6 +35,7 @@ public class TitularesRSS extends javax.swing.JDialog {
         jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Titulares RSS de ElPaís");
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -102,14 +104,15 @@ public class TitularesRSS extends javax.swing.JDialog {
             }
         });
     }
-    
+
     /**
      * Con este método representamos los titulares RSS en la pantalla
+     *
      * @param titulares
      */
-    public void escribirTitulares(ArrayList<String> titulares){
+    public void escribirTitulares(ArrayList<String> titulares) {
         this.jTextArea1.append(" ****** Titulares de El País ******\n");
-        for (String s : titulares){
+        for (String s : titulares) {
             this.jTextArea1.append("- " + s + "\n");
         }
     }
@@ -119,4 +122,3 @@ public class TitularesRSS extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
-

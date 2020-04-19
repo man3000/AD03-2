@@ -53,6 +53,7 @@ public class removeEmpleadosTiendas extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Eliminar Empleados de Tiendas");
 
         jLabel1.setText("Seleccione Tienda:");
 
@@ -272,7 +273,6 @@ public class removeEmpleadosTiendas extends javax.swing.JDialog {
             this.jComboBoxEmpleados.setModel(model);
         }
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
