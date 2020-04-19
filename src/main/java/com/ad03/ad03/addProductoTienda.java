@@ -20,8 +20,6 @@ public class addProductoTienda extends javax.swing.JDialog {
 
     private HashMap<String, Integer> tiendasMap = new HashMap<>();
     private HashMap<String, Integer> productosMap = new HashMap<>();
-    
-    
 
     /**
      * Creates new form addProducto
@@ -32,6 +30,8 @@ public class addProductoTienda extends javax.swing.JDialog {
     public addProductoTienda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocation(parent.getLocation());
+        fijarModeloTienda();
     }
 
     /**
@@ -78,6 +78,12 @@ public class addProductoTienda extends javax.swing.JDialog {
         });
 
         jLabel1.setText("Tienda");
+
+        jComboBoxProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxProductoActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Producto");
 
@@ -136,28 +142,28 @@ public class addProductoTienda extends javax.swing.JDialog {
         if (jComboBoxProducto.getItemCount() != 0 && jComboBoxTienda.getItemCount() != 0) {
             String tt = (String) this.jComboBoxTienda.getSelectedItem();
             String tp = (String) this.jComboBoxProducto.getSelectedItem();
-            
+
             int idTienda = tiendasMap.get(tt);
             int idProducto = productosMap.get(tp);
-            int stock;
-            
+            int st;
+
             if (this.stock.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Se deben rellenar el campo del stock", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Se debe rellenar el campo del stock", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                
-                try {                    
-                    
-                    stock = Integer.parseInt(this.stock.getText());
-                    VentanaPrincipal.insertarProductoTienda(idTienda, idProducto, stock);
-                    
+
+                try {
+
+                    st = Integer.parseInt(this.stock.getText());
+                    VentanaPrincipal.insertarProductoTienda(idTienda, idProducto, st);
                     this.dispose();
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "El stock no está en el formato correcto", "Error", JOptionPane.ERROR_MESSAGE);
-                    
+
                 }
             }
         } else {
             JOptionPane.showMessageDialog(this, "No existen tiendas o no existen productos", "Error", JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_jButton_addProductoOKActionPerformed
 
@@ -167,60 +173,22 @@ public class addProductoTienda extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton_addProductoCancelarActionPerformed
 
     private void jComboBoxTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTiendaActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jComboBoxTiendaActionPerformed
+
+    private void jComboBoxProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxProductoActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addProductoTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addProductoTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addProductoTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addProductoTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                addProductoTienda dialog = new addProductoTienda(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-
-    }
-
     /**
      * Con este método establecemos los elementos que se muestran en el
      * desplegable
      */
     public void fijarModeloTienda() {
+
         String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
@@ -236,17 +204,14 @@ public class addProductoTienda extends javax.swing.JDialog {
                 cadena.add(rs.getString("nombre") + " - " + rs.getString("ciudad"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
 
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBoxTienda.setModel(model);
+
+        fijarModeloProducto();
         
-        if (jComboBoxTienda.getItemCount() == 0) {            
-            JOptionPane.showMessageDialog(this, "No existen tiendas registradas", "Advertencia", JOptionPane.OK_OPTION);            
-        } else {
-            fijarModeloProducto();
-        }
     }
 
     /**
@@ -254,10 +219,8 @@ public class addProductoTienda extends javax.swing.JDialog {
      * desplegable
      */
     public void fijarModeloProducto() {
-        
-       
-        String sql = "SELECT * FROM Productos ORDER BY nombre ASC";
 
+        String sql = "SELECT * FROM Productos ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
 

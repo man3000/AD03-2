@@ -33,6 +33,8 @@ public class modifyProductosStock extends javax.swing.JDialog {
     public modifyProductosStock(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocation(parent.getLocation());
+        fijarModeloTiendas();
     }
 
     /**
@@ -98,11 +100,11 @@ public class modifyProductosStock extends javax.swing.JDialog {
                         .addComponent(jButton_modificarStockProducto_modificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton_modificarStockProducto_cancelar))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel3)
-                            .addGap(255, 255, 255)
-                            .addComponent(jTextFieldStock, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                            .addGap(214, 214, 214)
+                            .addComponent(jTextFieldStock, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1)
@@ -111,7 +113,7 @@ public class modifyProductosStock extends javax.swing.JDialog {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jComboBoxTiendas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBoxProductos, 0, 220, Short.MAX_VALUE)))))
-                .addGap(15, 15, 15))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,7 +143,6 @@ public class modifyProductosStock extends javax.swing.JDialog {
     private void jComboBoxTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTiendasActionPerformed
         // TODO add your handling code here:
         fijarModeloProductos();
-        //fijarStockProducto();
     }//GEN-LAST:event_jComboBoxTiendasActionPerformed
 
     private void jButton_modificarStockProducto_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_modificarStockProducto_cancelarActionPerformed
@@ -157,15 +158,15 @@ public class modifyProductosStock extends javax.swing.JDialog {
             int idTienda_eliminar = this.tiendasMap.get(tien);
             int idProducto_eliminar = this.productosMap.get(prod);
             int stock;
-            
+
             try {
                 stock = Integer.parseInt(this.jTextFieldStock.getText());
-                
+
                 if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                     VentanaPrincipal.insertarProductoTienda(idTienda_eliminar, idProducto_eliminar, stock);
                     this.dispose();
                 }
-                
+
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "El stock no está en el formato correcto", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -175,59 +176,12 @@ public class modifyProductosStock extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton_modificarStockProducto_modificarActionPerformed
 
     private void jComboBoxProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProductosActionPerformed
-        // TODO add your handling code here:
         fijarStockProducto();
     }//GEN-LAST:event_jComboBoxProductosActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modifyProductosStock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modifyProductosStock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modifyProductosStock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modifyProductosStock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                modifyProductosStock dialog = new modifyProductosStock(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
     /**
      * Con este método establecemos los elementos que se muestran en el
      * desplegable
@@ -253,13 +207,13 @@ public class modifyProductosStock extends javax.swing.JDialog {
 
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBoxTiendas.setModel(model);
-        
-        if (jComboBoxTiendas.getItemCount() == 0) {            
-            JOptionPane.showMessageDialog(this, "No existen tiendas registradas", "Advertencia", JOptionPane.OK_OPTION);            
-        } else {
+
+        if (jComboBoxTiendas.getItemCount() != 0) {
+            
             fijarModeloProductos();
+
         }
-        
+
     }
 
     /**
@@ -268,75 +222,69 @@ public class modifyProductosStock extends javax.swing.JDialog {
      */
     public void fijarModeloProductos() {
 
-        String i = (String) this.jComboBoxTiendas.getSelectedItem();
-        int idTienda = this.tiendasMap.get(i);
-
-        String sql = "SELECT * FROM Productos WHERE idProducto IN (SELECT Productos_idProducto FROM Tiendas_Productos WHERE Tiendas_idTienda = ("
-                + idTienda + "))ORDER BY nombre ASC";
-
-        ArrayList<String> cadena = new ArrayList<>();
-
-        Connection con = VentanaPrincipal.connectDatabase();
-
-        try {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
-            while (rs.next()) {
-                this.productosMap.put(rs.getString("nombre"), rs.getInt("idProducto"));
-                cadena.add(rs.getString("nombre"));
+        if (jComboBoxTiendas.getItemCount() != 0) {
+            
+            String i = (String) this.jComboBoxTiendas.getSelectedItem();
+            int idTienda = this.tiendasMap.get(i);
+            
+            String sql = "SELECT * FROM Productos WHERE idProducto IN (SELECT Productos_idProducto FROM Tiendas_Productos WHERE Tiendas_idTienda = ("
+                    + idTienda + "))ORDER BY nombre ASC";
+            
+            ArrayList<String> cadena = new ArrayList<>();
+            
+            Connection con = VentanaPrincipal.connectDatabase();
+            
+            try {
+                Statement statement = con.createStatement();
+                ResultSet rs = statement.executeQuery(sql);
+                
+                while (rs.next()) {
+                    this.productosMap.put(rs.getString("nombre"), rs.getInt("idProducto"));
+                    cadena.add(rs.getString("nombre"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
-        if (cadena.isEmpty()) {
-            System.out.println("el modelo del desplegable del producto está vacío");
-        } else {
-            System.out.println("el modelo del desplegable del producto algo tiene");
-        }
-        this.jComboBoxProductos.setModel(model);
-        
-        if (jComboBoxProductos.getItemCount() == 0) {
-            this.jTextFieldStock.setText("N/A");            
-        } else {
-            fijarStockProducto();
+            
+            DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
+            this.jComboBoxProductos.setModel(model);
+            
+            if (jComboBoxProductos.getItemCount() == 0) {
+                this.jTextFieldStock.setText("N/A");
+            } else {
+                fijarStockProducto();
+            }
         }
     }
-    
+
     public void fijarStockProducto() {
 
-        String tien = (String) this.jComboBoxTiendas.getSelectedItem();
-        String prod = (String) this.jComboBoxProductos.getSelectedItem();
-        if (prod == null) {
-            System.out.println("no hay prod");
-        } else{
-            System.out.println("al prod es " + prod);
-        }
-        
-        System.out.println(prod);
-        int idTienda_modificar = this.tiendasMap.get(tien);
-        int idProducto_modificar = this.productosMap.get(prod);
-        String stock = "";
-        String sql = "SELECT * FROM Tiendas_Productos WHERE Tiendas_idTienda = "
-                + idTienda_modificar + " AND Productos_idProducto = "
-                + idProducto_modificar + ";";
-
-        Connection con = VentanaPrincipal.connectDatabase();
-
-        try {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
-            while (rs.next()) {
-                stock = Integer.toString(rs.getInt("stock"));
+        if (jComboBoxProductos.getItemCount() != 0) {
+            String tien = (String) this.jComboBoxTiendas.getSelectedItem();
+            String prod = (String) this.jComboBoxProductos.getSelectedItem();
+            
+            int idTienda_modificar = this.tiendasMap.get(tien);
+            int idProducto_modificar = this.productosMap.get(prod);
+            String stock = "";
+            String sql = "SELECT * FROM Tiendas_Productos WHERE Tiendas_idTienda = "
+                    + idTienda_modificar + " AND Productos_idProducto = "
+                    + idProducto_modificar + ";";
+            
+            Connection con = VentanaPrincipal.connectDatabase();
+            
+            try {
+                Statement statement = con.createStatement();
+                ResultSet rs = statement.executeQuery(sql);
+                
+                while (rs.next()) {
+                    stock = Integer.toString(rs.getInt("stock"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
+            
+            this.jTextFieldStock.setText(stock);
         }
-
-        this.jTextFieldStock.setText(stock);
     }
 
 
@@ -351,9 +299,7 @@ public class modifyProductosStock extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldStock;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    public void deshabilitarCasillaStock(){
+    public void deshabilitarCasillaStock() {
         this.jTextFieldStock.setEditable(false);
         this.jTextFieldStock.setBackground(Color.lightGray);
     }

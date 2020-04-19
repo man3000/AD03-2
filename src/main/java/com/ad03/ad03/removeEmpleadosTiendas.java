@@ -18,10 +18,10 @@ import javax.swing.JOptionPane;
  *
  * @author Manuel
  */
-public class removeProductosTiendas extends javax.swing.JDialog {
+public class removeEmpleadosTiendas extends javax.swing.JDialog {
 
     HashMap<String, Integer> tiendasMap = new HashMap<>();
-    HashMap<String, Integer> productosMap = new HashMap<>();
+    HashMap<String, Integer> empleadosMap = new HashMap<>();
 
     /**
      * Creates new form removeProducto
@@ -29,11 +29,11 @@ public class removeProductosTiendas extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public removeProductosTiendas(java.awt.Frame parent, boolean modal) {
+    public removeEmpleadosTiendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setLocation(parent.getLocation());
         fijarModeloTiendas();
+        setLocation(parent.getLocation());
     }
 
     /**
@@ -48,7 +48,7 @@ public class removeProductosTiendas extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jComboBoxTiendas = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBoxProductos = new javax.swing.JComboBox<>();
+        jComboBoxEmpleados = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -62,11 +62,11 @@ public class removeProductosTiendas extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Seleccione Producto:");
+        jLabel2.setText("Seleccione Empleado:");
 
-        jComboBoxProductos.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxProductosActionPerformed(evt);
+                jComboBoxEmpleadosActionPerformed(evt);
             }
         });
 
@@ -102,7 +102,7 @@ public class removeProductosTiendas extends javax.swing.JDialog {
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jComboBoxTiendas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxProductos, 0, 220, Short.MAX_VALUE))))
+                            .addComponent(jComboBoxEmpleados, 0, 220, Short.MAX_VALUE))))
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
@@ -115,7 +115,7 @@ public class removeProductosTiendas extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBoxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -127,9 +127,7 @@ public class removeProductosTiendas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBoxTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTiendasActionPerformed
-        // TODO add your handling code here:
-
-        fijarModeloProductos();
+        fijarModeloEmpleados();
 
     }//GEN-LAST:event_jComboBoxTiendasActionPerformed
 
@@ -139,27 +137,26 @@ public class removeProductosTiendas extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
 
-        if (jComboBoxProductos.getItemCount() != 0 && jComboBoxTiendas.getItemCount() != 0) {
+        if (jComboBoxEmpleados.getItemCount() != 0 && jComboBoxTiendas.getItemCount() != 0) {
             String tien = (String) this.jComboBoxTiendas.getSelectedItem();
-            String prod = (String) this.jComboBoxProductos.getSelectedItem();
-            int idTienda_eliminar = this.tiendasMap.get(tien);
-            int idProducto_eliminar = this.productosMap.get(prod);
+            String emp = (String) this.jComboBoxEmpleados.getSelectedItem();
+            int idTienda = this.tiendasMap.get(tien);
+            int idEmpleado = this.empleadosMap.get(emp);
 
             if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                VentanaPrincipal.eliminarProductoTienda(idTienda_eliminar, idProducto_eliminar);
+                VentanaPrincipal.eliminarEmpleadoTienda(idTienda, idEmpleado);
                 this.dispose();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "No existen tiendas o éstas no tienen productos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No existen tiendas o éstas no tienen empleados", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jComboBoxProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProductosActionPerformed
+    private void jComboBoxEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEmpleadosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxProductosActionPerformed
+    }//GEN-LAST:event_jComboBoxEmpleadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,14 +175,18 @@ public class removeProductosTiendas extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(removeProductosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(removeEmpleadosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(removeProductosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(removeEmpleadosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(removeProductosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(removeEmpleadosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(removeProductosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(removeEmpleadosTiendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -194,7 +195,7 @@ public class removeProductosTiendas extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                removeProductosTiendas dialog = new removeProductosTiendas(new javax.swing.JFrame(), true);
+                removeEmpleadosTiendas dialog = new removeEmpleadosTiendas(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -233,22 +234,22 @@ public class removeProductosTiendas extends javax.swing.JDialog {
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBoxTiendas.setModel(model);
 
-        if (jComboBoxTiendas.getItemCount() != 0) {
-            fijarModeloProductos();
-        }
+        fijarModeloEmpleados();
+
     }
 
     /**
      * Con este método establecemos los elementos que se muestran en el
      * desplegable
      */
-    public void fijarModeloProductos() {
+    public void fijarModeloEmpleados() {
 
         if (jComboBoxTiendas.getItemCount() != 0) {
+
             String i = (String) this.jComboBoxTiendas.getSelectedItem();
             int idTienda = this.tiendasMap.get(i);
 
-            String sql = "SELECT * FROM Productos WHERE idProducto IN (SELECT Productos_idProducto FROM Tiendas_Productos WHERE Tiendas_idTienda = ("
+            String sql = "SELECT * FROM Empleados WHERE idEmpleado IN (SELECT Empleados_idEmpleado FROM Tiendas_Empleados WHERE Tiendas_idTienda = ("
                     + idTienda + "))ORDER BY nombre ASC";
 
             ArrayList<String> cadena = new ArrayList<>();
@@ -260,15 +261,15 @@ public class removeProductosTiendas extends javax.swing.JDialog {
                 ResultSet rs = statement.executeQuery(sql);
 
                 while (rs.next()) {
-                    this.productosMap.put(rs.getString("nombre"), rs.getInt("idProducto"));
-                    cadena.add(rs.getString("nombre"));
+                    this.empleadosMap.put(rs.getString("nombre") + " " + rs.getString("apellidos"), rs.getInt("idEmpleado"));
+                    cadena.add(rs.getString("nombre") + " " + rs.getString("apellidos"));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
-            this.jComboBoxProductos.setModel(model);
+            this.jComboBoxEmpleados.setModel(model);
         }
     }
 
@@ -276,7 +277,7 @@ public class removeProductosTiendas extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBoxProductos;
+    private javax.swing.JComboBox<String> jComboBoxEmpleados;
     private javax.swing.JComboBox<String> jComboBoxTiendas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

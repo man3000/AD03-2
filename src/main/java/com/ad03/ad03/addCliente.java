@@ -19,6 +19,7 @@ public class addCliente extends javax.swing.JDialog {
     public addCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocation(parent.getLocation());
     }
 
     /**

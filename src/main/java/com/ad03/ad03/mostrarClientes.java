@@ -20,8 +20,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class mostrarClientes extends javax.swing.JDialog {
 
-    String[] titulosColumnas = {"idTienda", "nombre", "ciudad"};
-    String[] columnas = new String[3];
+    String[] titulosColumnas = {"idCliente", "Nombre", "Apellidos", "E-mail"};
+    String[] columnas = new String[4];
     ArrayList<ArrayList<String>> elementosModelo = new ArrayList<>();
 
     /**
@@ -30,6 +30,8 @@ public class mostrarClientes extends javax.swing.JDialog {
     public mostrarClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        fijarModelo();
+        setLocation(parent.getLocation());
     }
 
     /**
@@ -131,7 +133,7 @@ public class mostrarClientes extends javax.swing.JDialog {
 
     void fijarModelo() {
 
-        String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
+        String sql = "SELECT * FROM Clientes ORDER BY nombre ASC";
 
         ArrayList<String> aux = new ArrayList<>();
 
@@ -142,9 +144,10 @@ public class mostrarClientes extends javax.swing.JDialog {
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
-                aux.add(Integer.toString(rs.getInt("idTienda")));
+                aux.add(Integer.toString(rs.getInt("idCliente")));
                 aux.add(rs.getString("nombre"));
-                aux.add(rs.getString("ciudad"));
+                aux.add(rs.getString("apellidos"));
+                aux.add(rs.getString("email"));
                 elementosModelo.add(aux);
                 aux = new ArrayList<>();
             }

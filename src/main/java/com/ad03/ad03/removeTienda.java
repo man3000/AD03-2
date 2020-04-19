@@ -22,15 +22,20 @@ import javax.swing.JOptionPane;
  */
 public class removeTienda extends javax.swing.JDialog {
 
-    HashMap<String,Integer> tiendasMap = new HashMap<>();
+    HashMap<String, Integer> tiendasMap = new HashMap<>();
+
     /**
      * Creates new form removeTienda
+     *
      * @param parent
      * @param modal
      */
     public removeTienda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocation(parent.getLocation());
+        fijarModelo();
+        
     }
 
     /**
@@ -101,14 +106,19 @@ public class removeTienda extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-                
-        String i = (String) this.jComboBox1.getSelectedItem();
-        
-            if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+
+        if (jComboBox1.getItemCount() != 0) {
+            String i = (String) this.jComboBox1.getSelectedItem();
+
+            if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 VentanaPrincipal.eliminarTienda(tiendasMap.get(i));
                 this.dispose();
-            } 
-        
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No existen tiendas", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -119,56 +129,19 @@ public class removeTienda extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(removeTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(removeTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(removeTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(removeTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                removeTienda dialog = new removeTienda(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-    
     /**
-     * Con este método establecemos los elementos que se muestran en el desplegable
+     * Con este método establecemos los elementos que se muestran en el
+     * desplegable
      */
     public void fijarModelo() {
+
         String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
 
         Connection con = VentanaPrincipal.connectDatabase();
-        
+
         try {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -180,11 +153,10 @@ public class removeTienda extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-        
+
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBox1.setModel(model);
-    } 
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

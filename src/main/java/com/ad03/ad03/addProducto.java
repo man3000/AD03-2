@@ -132,9 +132,6 @@ public class addProducto extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_addProductoOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addProductoOKActionPerformed
-        // TODO add your handling code here:
-        //String i = (String)this.jComboBox1.getSelectedItem();
-        
         
         if (this.nombre_producto.getText().equals("") || 
                 this.precio.getText().equals("")  || 
@@ -152,7 +149,7 @@ public class addProducto extends javax.swing.JDialog {
                 
                 this.dispose();
             } catch (ErrorNumero | NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "El ID, precio y/o la cantidad no están en el formato correcto", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "El precio no está en el formato correcto", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jButton_addProductoOKActionPerformed

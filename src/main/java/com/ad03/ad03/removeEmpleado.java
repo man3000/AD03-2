@@ -19,16 +19,20 @@ import javax.swing.JOptionPane;
  * @author Manuel
  */
 public class removeEmpleado extends javax.swing.JDialog {
-    
-    HashMap<String,Integer> empleadosMap = new HashMap<>();
+
+    HashMap<String, Integer> empleadosMap = new HashMap<>();
+
     /**
      * Creates new form removeProducto
+     *
      * @param parent
      * @param modal
      */
     public removeEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        fijarModeloEmpleado();
+        setLocation(parent.getLocation());
     }
 
     /**
@@ -111,20 +115,22 @@ public class removeEmpleado extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        
-        String i = (String ) jComboBoxEmpleados.getSelectedItem();
-        int idEmpleado = empleadosMap.get(i);
-        
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+
+        if (jComboBoxEmpleados.getItemCount() != 0) {
+            String i = (String) jComboBoxEmpleados.getSelectedItem();
+            int idEmpleado = empleadosMap.get(i);
+
+            if (JOptionPane.showConfirmDialog(this, "¿Está seguro?", "Advertencia", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 VentanaPrincipal.eliminarEmpleado(idEmpleado);
                 this.dispose();
             }
-        
-        
-        
-        
+        } else {
+            JOptionPane.showMessageDialog(this, "No existen empleados", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
 
     private void jComboBoxEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEmpleadosActionPerformed
         // TODO add your handling code here:
@@ -174,18 +180,17 @@ public class removeEmpleado extends javax.swing.JDialog {
             }
         });
     }
-    
+
     /**
-     * Con este método establecemos los elementos que se muestran en el desplegable
+     * Con este método establecemos los elementos que se muestran en el
+     * desplegable
      */
-    
-    
     /**
-     * Con este método establecemos los elementos que se muestran en el desplegable
+     * Con este método establecemos los elementos que se muestran en el
+     * desplegable
      */
-    public void fijarModeloEmpleado(){
-        
-      
+    public void fijarModeloEmpleado() {
+
         String sql = "SELECT * FROM Empleados ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
@@ -197,8 +202,8 @@ public class removeEmpleado extends javax.swing.JDialog {
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
-                this.empleadosMap.put(rs.getString("nombre")+" "+rs.getString("apellidos"), rs.getInt("idEmpleado"));
-                cadena.add(rs.getString("nombre")+" "+rs.getString("apellidos"));
+                this.empleadosMap.put(rs.getString("nombre") + " " + rs.getString("apellidos"), rs.getInt("idEmpleado"));
+                cadena.add(rs.getString("nombre") + " " + rs.getString("apellidos"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,8 +213,7 @@ public class removeEmpleado extends javax.swing.JDialog {
         this.jComboBoxEmpleados.setModel(model);
 
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -125,7 +125,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItemAnadirEmpleado = new javax.swing.JMenuItem();
         jMenuItemAnadirEmpleadoTienda = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItemMostrarEmpleados = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItemEliminarEmpleado = new javax.swing.JMenuItem();
         jMenuItemEliminarEmpleadoTienda = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -287,13 +290,37 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItemAnadirEmpleadoTienda);
 
-        jMenuItemMostrarEmpleados.setText("Mostrar Empleados");
+        jMenuItem1.setText("Modificar Horas Semanales de Empleados");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenuItemMostrarEmpleados.setText("Mostrar Empleados de la Franquicia");
         jMenuItemMostrarEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemMostrarEmpleadosActionPerformed(evt);
             }
         });
         jMenu3.add(jMenuItemMostrarEmpleados);
+
+        jMenuItem2.setText("Mostrar Horas Semanales de Empleados");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
+
+        jMenuItem3.setText("Mostrar Empleados de una Tienda");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
 
         jMenuItemEliminarEmpleado.setText("Eliminar Empleado");
         jMenuItemEliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -304,6 +331,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItemEliminarEmpleado);
 
         jMenuItemEliminarEmpleadoTienda.setText("Eliminar Empleado de Tienda");
+        jMenuItemEliminarEmpleadoTienda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEliminarEmpleadoTiendaActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItemEliminarEmpleadoTienda);
 
         jMenuBar1.add(jMenu3);
@@ -318,7 +350,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItemAnadirCliente);
 
-        jMenuItemMostrarCliente.setText("Mostrar Cliente");
+        jMenuItemMostrarCliente.setText("Mostrar Clientes");
+        jMenuItemMostrarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMostrarClienteActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItemMostrarCliente);
 
         jMenuItemEliminarCliente.setText("Eliminar Cliente");
@@ -377,9 +414,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         removeProductosTiendas removeproductosTiendas = new removeProductosTiendas(this, true);
-        removeproductosTiendas.setLocation(this.getLocation());
-        removeproductosTiendas.fijarModeloTiendas();
-        //removeproductosTiendas.fijarModeloProductos();
+        
         removeproductosTiendas.setVisible(true);
 
 
@@ -399,7 +434,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         addProducto addproducto = new addProducto(this, true);
-        //addproducto.fijarModelo();
         addproducto.setLocation(this.getLocation());
         addproducto.setVisible(true);
 
@@ -429,7 +463,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_copiaSeguridadActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        // TODO add your handling code here:
         int option = JOptionPane.showConfirmDialog(this, "¿Confirma que desea salir de la aplicación? ", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             System.exit(0);
@@ -438,25 +471,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_salirActionPerformed
 
     private void jMenuItemAnadirEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirEmpleadoActionPerformed
-        // TODO add your handling code here:
 
         addEmpleado addempleado = new addEmpleado(this, true);
         
-        addempleado.setLocation(this.getLocation());
         addempleado.setVisible(true);
 
 
     }//GEN-LAST:event_jMenuItemAnadirEmpleadoActionPerformed
 
     private void jMenuItemAnadirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirClienteActionPerformed
-        // TODO add your handling code here:
         addCliente addcliente = new addCliente(this, true);
-        addcliente.setLocation(this.getLocation());
         addcliente.setVisible(true);
     }//GEN-LAST:event_jMenuItemAnadirClienteActionPerformed
 
     private void importarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importarActionPerformed
-        // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -469,8 +497,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         removeTienda removetienda = new removeTienda(this, true);
-        removetienda.fijarModelo();
-        removetienda.setLocation(this.getLocation());
+        
         removetienda.setVisible(true);
 
     }//GEN-LAST:event_jMenuItem_EliminarTiendaActionPerformed
@@ -479,8 +506,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         
             removeEmpleado removeempleado = new removeEmpleado(this, true);
-            removeempleado.fijarModeloEmpleado();
-            removeempleado.setLocation(this.getLocation());
+            
             removeempleado.setVisible(true);
         
     }//GEN-LAST:event_jMenuItemEliminarEmpleadoActionPerformed
@@ -488,8 +514,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItemEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarClienteActionPerformed
         // TODO add your handling code here:
         removeCliente removecliente = new removeCliente(this, true);
-        removecliente.setLocation(this.getLocation());
-        removecliente.fijarModelo();
+        
         removecliente.setVisible(true);
     }//GEN-LAST:event_jMenuItemEliminarClienteActionPerformed
 
@@ -521,57 +546,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarProductoActionPerformed
         removeProducto removeproducto = new removeProducto(this, true);
-        removeproducto.setLocation(this.getLocation());
-        //removeproducto.fijarModeloTiendas();
-        removeproducto.fijarModeloProductos();
+        
         removeproducto.setVisible(true);
     }//GEN-LAST:event_jMenuItemEliminarProductoActionPerformed
 
     private void jMenuItemModificarStockProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarStockProductoActionPerformed
         // TODO add your handling code here:
         modifyProductosStock modifyproductosStock = new modifyProductosStock(this, true);
-        modifyproductosStock.setLocation(this.getLocation());
-        modifyproductosStock.fijarModeloTiendas();
-        modifyproductosStock.fijarModeloProductos();
-        modifyproductosStock.fijarStockProducto();
+        
         modifyproductosStock.setVisible(true);
     }//GEN-LAST:event_jMenuItemModificarStockProductoActionPerformed
 
     private void jMenuItemMostrarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarProductosActionPerformed
         // TODO add your handling code here:
         mostrarProductos mostrarproductos = new mostrarProductos(this, true);
-        mostrarproductos.fijarModelo();
-        mostrarproductos.setLocation(this.getLocation());
+        
         mostrarproductos.setVisible(true);
     }//GEN-LAST:event_jMenuItemMostrarProductosActionPerformed
 
     private void jMenuItemMostrarProductosTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarProductosTiendaActionPerformed
         // TODO add your handling code here:
         mostrarProductosTienda mostrarproductosTienda = new mostrarProductosTienda(this, true);
-        mostrarproductosTienda.fijarModeloTiendas();
-        mostrarproductosTienda.fijarModeloTabla();
         
-        mostrarproductosTienda.setLocation(this.getLocation());
         mostrarproductosTienda.setVisible(true);
     }//GEN-LAST:event_jMenuItemMostrarProductosTiendaActionPerformed
 
     private void jMenuItemAnadirProductoTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirProductoTiendaActionPerformed
-        // TODO add your handling code here:
+        
         addProductoTienda addproductoTienda = new addProductoTienda(this, true);
-        addproductoTienda.fijarModeloTienda();
-        //addproductoTienda.fijarModeloEmpleado();
-        addproductoTienda.setLocation(this.getLocation());
+        //addproductoTienda.fijarModeloTienda();
+        //addproductoTienda.setLocation(this.getLocation());
         addproductoTienda.setVisible(true);
     }//GEN-LAST:event_jMenuItemAnadirProductoTiendaActionPerformed
 
     private void jMenuItemMostrarStrockProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarStrockProductoActionPerformed
         // TODO add your handling code here:
         mostrarProductosStock showproductosStock = new mostrarProductosStock(this, true);
-        showproductosStock.setLocation(this.getLocation());
-        showproductosStock.fijarModeloTiendas();
-        //modifyproductosStock.fijarModeloProductos();
-        //modifyproductosStock.fijarStockProducto();
-        showproductosStock.deshabilitarCasillaStock();
+        
         showproductosStock.setVisible(true);
         
        
@@ -580,8 +591,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItemAnadirEmpleadoTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAnadirEmpleadoTiendaActionPerformed
         // TODO add your handling code here:
         addEmpleadoTienda addempleadoTienda = new addEmpleadoTienda(this, true);
-        addempleadoTienda.fijarModeloTienda();
-        addempleadoTienda.setLocation(this.getLocation());
+        
         addempleadoTienda.setVisible(true);
                 
     }//GEN-LAST:event_jMenuItemAnadirEmpleadoTiendaActionPerformed
@@ -589,10 +599,40 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItemMostrarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarEmpleadosActionPerformed
         // TODO add your handling code here:
         mostrarEmpleados mostrarempleados = new mostrarEmpleados(this, true);
-        mostrarempleados.fijarModelo();
-        mostrarempleados.setLocation(this.getLocation());
+        
         mostrarempleados.setVisible(true);
     }//GEN-LAST:event_jMenuItemMostrarEmpleadosActionPerformed
+
+    private void jMenuItemEliminarEmpleadoTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEmpleadoTiendaActionPerformed
+        // TODO add your handling code here:
+        removeEmpleadosTiendas removeempleadosTiendas = new removeEmpleadosTiendas(this, true);
+        
+        removeempleadosTiendas.setVisible(true);
+    }//GEN-LAST:event_jMenuItemEliminarEmpleadoTiendaActionPerformed
+
+    private void jMenuItemMostrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMostrarClienteActionPerformed
+        // TODO add your handling code here:
+        mostrarClientes mostrarclientes = new mostrarClientes(this, true);
+        
+        mostrarclientes.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMostrarClienteActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        modifyEmpleadosHoras modifyempleadosHoras = new modifyEmpleadosHoras(this, true);
+        modifyempleadosHoras.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        mostrarEmpleadosHoras mostrarempleadosHoras = new mostrarEmpleadosHoras(this, true);
+        mostrarempleadosHoras.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        mostrarEmpleadosTienda mostrarempleadosTienda = new mostrarEmpleadosTienda(this, true);
+        mostrarempleadosTienda.setVisible(true);
+     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * Con este método analizamos el archivo "data.json" y comprobamos que el
@@ -744,7 +784,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItemAnadirCliente;
     private javax.swing.JMenuItem jMenuItemAnadirEmpleado;
     private javax.swing.JMenuItem jMenuItemAnadirEmpleadoTienda;
@@ -798,6 +841,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     /*
     Método que crea a tabla persona nunha base de datos persoa  
      */
+
     private static void crearTablas(Connection con) {
         try {
             String sql = "CREATE TABLE IF NOT EXISTS Provincias (\n"
@@ -809,11 +853,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             stmt.execute(sql);
 
             sql = "CREATE TABLE IF NOT EXISTS Tiendas (\n"
-                    + "  idTienda INT NOT NULL,\n"
+                    + "  idTienda INTEGER PRIMARY KEY AUTOINCREMENT,\n"
                     + "  nombre VARCHAR(45) NULL,\n"
                     + "  ciudad VARCHAR(45) NULL,\n"
                     + "  Provincias_idProvincia INT NOT NULL,\n"
-                    + "  PRIMARY KEY (idTienda),\n"
                     + "  CONSTRAINT fk_Tiendas_Provincias\n"
                     + "    FOREIGN KEY (Provincias_idProvincia)\n"
                     + "    REFERENCES Provincias (idProvincia)\n"
@@ -824,30 +867,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             stmt.execute(sql);
 
             sql = "CREATE TABLE IF NOT EXISTS Productos (\n"
-                    + "  idProducto INT NOT NULL,\n"
+                    + "  idProducto INTEGER PRIMARY KEY AUTOINCREMENT,\n"
                     + "  nombre VARCHAR(45) NULL,\n"
                     + "  descripcion VARCHAR(45) NULL,\n"
-                    + "  precio DECIMAL NULL DEFAULT 0,\n"
-                    + "  PRIMARY KEY (idProducto));";
+                    + "  precio DECIMAL NULL DEFAULT 0);";
 
             stmt = con.createStatement();
             stmt.execute(sql);
 
             sql = "CREATE TABLE IF NOT EXISTS Empleados (\n"
-                    + "  idEmpleado INT NOT NULL,\n"
+                    + "  idEmpleado INTEGER PRIMARY KEY AUTOINCREMENT,\n"
                     + "  nombre VARCHAR(45) NULL,\n"
-                    + "  apellidos VARCHAR(45) NULL,\n"
-                    + "  PRIMARY KEY (idEmpleado));";
+                    + "  apellidos VARCHAR(45) NULL);";
 
             stmt = con.createStatement();
             stmt.execute(sql);
 
             sql = "CREATE TABLE IF NOT EXISTS Clientes (\n"
-                    + "  idCliente INT NOT NULL,\n"
+                    + "  idCliente INTEGER PRIMARY KEY AUTOINCREMENT,\n"
                     + "  nombre VARCHAR(45) NULL,\n"
                     + "  apellidos VARCHAR(45) NULL,\n"
-                    + "  email VARCHAR(45) NULL,\n"
-                    + "  PRIMARY KEY (idCliente));";
+                    + "  email VARCHAR(45) NULL);";
 
             stmt = con.createStatement();
             stmt.execute(sql);
@@ -890,13 +930,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             stmt = con.createStatement();
             stmt.execute(sql);
 
-            System.out.println("Táboa persona creada con éxito");
+            System.out.println("Tablas creadas con éxito");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
     }
-
+    
     private void rellenarProvincias(Connection con) {
 
         for (Provincia prov : provincias.getProvincias()) {
@@ -931,6 +971,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             pstmt.setString(2, apel);
             pstmt.setString(3, mail);
             pstmt.executeUpdate();
+            
+            System.out.println("Se ha insertado el cliente " + nom + " " + apel);
+            
         } catch (SQLException e) {
             if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
                 System.out.println("El registro ya esiste");
@@ -956,10 +999,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             ResultSet rs = pstmt.getGeneratedKeys();
 
             idInsertado = (int) rs.getLong(1);
+            System.out.println("Tienda " + nom + " insertada con id " + idInsertado);
 
         } catch (SQLException e) {
             if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
-                System.out.println("El registro ya esiste");
+                System.out.println(e.getMessage());
 
             } else {
                 System.out.println(e.getMessage());
@@ -988,7 +1032,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
-                System.out.println("El registro ya esiste");
+                System.out.println(e.getMessage());
 
             } else {
                 System.out.println(e.getMessage());
@@ -1010,18 +1054,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             pstmt.setString(1, nom);
             pstmt.setString(2, desc);
-            System.out.println(prec);
             pstmt.setFloat(3, prec);
 
             pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
             idInsertado = (int) rs.getLong(1);
 
-            
+            System.out.println("Se ha insertado el producto " + nom + " con id " + idInsertado);
 
         } catch (SQLException e) {
             if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
-                System.out.println("El registro ya esiste");
+                System.out.println(e.getMessage());
 
             } else {
                 System.out.println(e.getMessage());
@@ -1048,10 +1091,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             ResultSet rs = pstmt.getGeneratedKeys();
             idInsertado = (int) rs.getLong(1);
 
+            System.out.println("Se ha insertado el empleado " + nom + " " + apel + " con id " + idInsertado);
             
         } catch (SQLException e) {
             if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
-                System.out.println("El registro ya esiste");
+                System.out.println(e.getMessage());
 
             } else {
                 System.out.println(e.getMessage());
@@ -1059,6 +1103,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
 
         desconnetDatabase(con);
+        
         return idInsertado;
     }
 
@@ -1079,7 +1124,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             if (e.getMessage().contains("SQLITE_CONSTRAINT")) {
-                System.out.println("El registro ya esiste");
+                System.out.println(e.getMessage());
 
             } else {
                 System.out.println(e.getMessage());
@@ -1093,14 +1138,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         Connection con = connectDatabase();
 
         String sql = "DELETE FROM Tiendas WHERE idTienda = (?);";
+        String sqlCascadeProductos = "DELETE FROM Tiendas_Productos WHERE Tiendas_idTienda = (?);";
+        String sqlCascadeEmpleados = "DELETE FROM Tiendas_Empleados WHERE Tiendas_idTienda = (?);";
+        
 
         try {
 
             PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmtProductos = con.prepareStatement(sqlCascadeProductos);
+            PreparedStatement pstmtEmpleados = con.prepareStatement(sqlCascadeEmpleados);
 
             pstmt.setInt(1, idTienda);
+            pstmtProductos.setInt(1, idTienda);
+            pstmtEmpleados.setInt(1, idTienda);
 
             pstmt.executeUpdate();
+            pstmtProductos.executeUpdate();
+            pstmtEmpleados.executeUpdate();
+            
+            System.out.println("Eliminada la tienda con id " + idTienda );
 
         } catch (SQLException e) {
 
@@ -1132,12 +1188,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         desconnetDatabase(con);
     }
-
-    public static void eliminarProducto(int idProducto_eliminar) {
+    
+    public static void eliminarEmpleadoTienda(int idTienda, int idEmpleado) {
         Connection con = connectDatabase();
 
-        String sql = "DELETE FROM Productos WHERE idProducto = "
-                + idProducto_eliminar + ";";
+        String sql = "DELETE FROM Tiendas_Empleados WHERE Tiendas_idTienda = ("
+                + idTienda + ") AND Empleados_idEmpleado = ("
+                + idEmpleado + ");";
 
         try {
 
@@ -1153,19 +1210,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         desconnetDatabase(con);
     }
-    
-    public static void eliminarEmpleado(int idEmpleado) {
+
+    public static void eliminarProducto(int idProducto) {
         
         Connection con = connectDatabase();
 
-        String sql = "DELETE FROM Empleados WHERE idEmpleado = "
-                + idEmpleado + ";";
+        String sql = "DELETE FROM Productos WHERE idProducto = (?);";
+        String sqlCascadeProductos = "DELETE FROM Tiendas_Productos WHERE Productos_idProducto = (?);";
+        
 
         try {
 
             PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmtProductos = con.prepareStatement(sqlCascadeProductos);
+
+            pstmt.setInt(1, idProducto);
+            pstmtProductos.setInt(1, idProducto);
 
             pstmt.executeUpdate();
+            pstmtProductos.executeUpdate();
+            
+            System.out.println("Eliminado el producto con id " + idProducto );
 
         } catch (SQLException e) {
 
@@ -1174,6 +1239,75 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
 
         desconnetDatabase(con);
+        
+        
+        /*Connection con = connectDatabase();
+        
+        String sql = "DELETE FROM Productos WHERE idProducto = "
+        + idProducto_eliminar + ";";
+        
+        try {
+        
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        
+        pstmt.executeUpdate();
+        
+        } catch (SQLException e) {
+        
+        System.out.println(e.getMessage());
+        
+        }
+        
+        desconnetDatabase(con);*/
+    }
+    
+    public static void eliminarEmpleado(int idEmpleado) {
+        
+        Connection con = connectDatabase();
+
+        String sql = "DELETE FROM Empleados WHERE idEmpleado = (?);";
+        String sqlCascadeEmpleados = "DELETE FROM Tiendas_Empleados WHERE Empleados_idEmpleado = (?);";
+        
+
+        try {
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmtEmpleados = con.prepareStatement(sqlCascadeEmpleados);
+
+            pstmt.setInt(1, idEmpleado);
+            pstmtEmpleados.setInt(1, idEmpleado);
+
+            pstmt.executeUpdate();
+            pstmtEmpleados.executeUpdate();
+            
+            System.out.println("Eliminado el empleado con id " + idEmpleado );
+
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+        desconnetDatabase(con);
+        
+        /*Connection con = connectDatabase();
+        
+        String sql = "DELETE FROM Empleados WHERE idEmpleado = "
+        + idEmpleado + ";";
+        
+        try {
+        
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        
+        pstmt.executeUpdate();
+        
+        } catch (SQLException e) {
+        
+        System.out.println(e.getMessage());
+        
+        }
+        
+        desconnetDatabase(con);*/
     }
 
     public static void eliminarCliente(int idClienteEliminar) {

@@ -30,6 +30,9 @@ public class removeCliente extends javax.swing.JDialog {
     public removeCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        fijarModelo();
+        setLocation(parent.getLocation());
+
     }
 
     /**

@@ -21,17 +21,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Manuel
  */
-public class mostrarProductosTienda extends javax.swing.JDialog {
+public class mostrarEmpleadosTienda extends javax.swing.JDialog {
     
     DefaultTableModel modeloTabla;
     HashMap<String,Integer> tiendasMap = new HashMap<>();
-    String[] titulosColumnas = {"idProducto", "Nombre", "Descripción", "Precio"};
+    String[] titulosColumnas = {"idEmpleado", "Nombre", "Apellidos"};
     ArrayList<ArrayList<String>> elementosModelo = new ArrayList<>();
 
     /**
      * Creates new form verTiendas
      */
-    public mostrarProductosTienda(java.awt.Frame parent, boolean modal) {
+    public mostrarEmpleadosTienda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         fijarModeloTiendas();
@@ -123,6 +123,7 @@ public class mostrarProductosTienda extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     public void fijarModeloTiendas() {
+        
         String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
@@ -157,8 +158,8 @@ public class mostrarProductosTienda extends javax.swing.JDialog {
             int idTiendaMostrar = this.tiendasMap.get(elem);
             System.out.println(idTiendaMostrar);
             
-            String sql = "SELECT * FROM Productos WHERE idProducto IN (SELECT Productos_idProducto from Tiendas_Productos where Tiendas_idTienda = "
-                    + idTiendaMostrar + ") ORDER BY idProducto ASC";
+            String sql = "SELECT * FROM Empleados WHERE idEmpleado IN (SELECT Empleados_idEmpleado from Tiendas_Empleados where Tiendas_idTienda = "
+                    + idTiendaMostrar + ") ORDER BY idEmpleado ASC";
             
             ArrayList<String> aux = new ArrayList<>();
             Float tempFloat;
@@ -169,13 +170,10 @@ public class mostrarProductosTienda extends javax.swing.JDialog {
                 ResultSet rs = statement.executeQuery(sql);
                 
                 while (rs.next()) {
-                    aux.add(Integer.toString(rs.getInt("idProducto")));
+                    aux.add(Integer.toString(rs.getInt("idEmpleado")));
                     aux.add(rs.getString("nombre"));
-                    aux.add(rs.getString("descripcion"));
-                    tempFloat = rs.getFloat("precio");
+                    aux.add(rs.getString("apellidos"));
                     
-                    DecimalFormat df = new DecimalFormat("####.##");
-                    aux.add(df.format(tempFloat));
                     
                     elementosModelo.add(aux);
                     aux = new ArrayList<>();

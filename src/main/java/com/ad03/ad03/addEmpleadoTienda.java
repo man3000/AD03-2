@@ -20,8 +20,6 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
 
     private HashMap<String, Integer> tiendasMap = new HashMap<>();
     private HashMap<String, Integer> empleadosMap = new HashMap<>();
-    
-    
 
     /**
      * Creates new form addProducto
@@ -32,6 +30,8 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
     public addEmpleadoTienda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        fijarModeloTienda();
+        setLocation(parent.getLocation());
     }
 
     /**
@@ -78,6 +78,12 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
         });
 
         jLabel1.setText("Tienda");
+
+        jComboBoxEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxEmpleadoActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Empleado");
 
@@ -136,24 +142,24 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
         if (jComboBoxEmpleado.getItemCount() != 0 && jComboBoxTienda.getItemCount() != 0) {
             String tt = (String) this.jComboBoxTienda.getSelectedItem();
             String tp = (String) this.jComboBoxEmpleado.getSelectedItem();
-            
+
             int idTienda = tiendasMap.get(tt);
             int idEmpleado = empleadosMap.get(tp);
-            int horasSemanales;
-            
+            int hs;
+
             if (this.horasSemanales.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Se deben rellenar el campo de horas semanales", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                
-                try {                    
-                    
-                    horasSemanales = Integer.parseInt(this.horasSemanales.getText());
-                    VentanaPrincipal.insertarEmpleadoTienda(idTienda, idEmpleado, horasSemanales);
-                    
+
+                try {
+
+                    hs = Integer.parseInt(this.horasSemanales.getText());
+                    VentanaPrincipal.insertarEmpleadoTienda(idTienda, idEmpleado, hs);
+
                     this.dispose();
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Las horas semanales no están en el formato correcto", "Error", JOptionPane.ERROR_MESSAGE);
-                    
+
                 }
             }
         } else {
@@ -170,61 +176,19 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxTiendaActionPerformed
 
+    private void jComboBoxEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEmpleadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxEmpleadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addEmpleadoTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addEmpleadoTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addEmpleadoTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addEmpleadoTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                addEmpleadoTienda dialog = new addEmpleadoTienda(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-
-    }
-
     /**
      * Con este método establecemos los elementos que se muestran en el
      * desplegable
      */
     public void fijarModeloTienda() {
+        
         String sql = "SELECT * FROM Tiendas ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
@@ -240,17 +204,14 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
                 cadena.add(rs.getString("nombre") + " - " + rs.getString("ciudad"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(addTienda.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
 
         DefaultComboBoxModel model = new DefaultComboBoxModel(cadena.toArray());
         this.jComboBoxTienda.setModel(model);
-        
-        if (jComboBoxTienda.getItemCount() == 0) {            
-            JOptionPane.showMessageDialog(this, "No existen tiendas registradas", "Advertencia", JOptionPane.OK_OPTION);            
-        } else {
-            fijarModeloEmpleado();
-        }
+
+        fijarModeloEmpleado();
+
     }
 
     /**
@@ -258,10 +219,8 @@ public class addEmpleadoTienda extends javax.swing.JDialog {
      * desplegable
      */
     public void fijarModeloEmpleado() {
-        
-       
-        String sql = "SELECT * FROM Empleados ORDER BY nombre ASC";
 
+        String sql = "SELECT * FROM Empleados ORDER BY nombre ASC";
 
         ArrayList<String> cadena = new ArrayList<>();
 
